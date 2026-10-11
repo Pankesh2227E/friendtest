@@ -1,0 +1,98 @@
+{
+  "cij9Li": {
+    "id": "cij9Li",
+    "name": "Alex",
+    "gender": "male",
+    "questions": [
+      {
+        "id": "9",
+        "question": "What makes userName happy?",
+        "options": [
+          "Pizza",
+          "Gifts",
+          "Hugs",
+          "Sleep"
+        ]
+      },
+      {
+        "id": "24",
+        "question": "Study style?",
+        "options": [
+          "Early",
+          "Night before",
+          "5 mins",
+          "Never"
+        ]
+      },
+      {
+        "id": "11",
+        "question": "Hates most?",
+        "options": [
+          "Farting",
+          "Lying",
+          "Fake friends",
+          "Spiders"
+        ]
+      },
+      {
+        "id": "435",
+        "question": "Fav show?",
+        "options": [
+          "Pokemon",
+          "Naruto",
+          "Gumball",
+          "SpongeBob"
+        ]
+      },
+      {
+        "id": "437",
+        "question": "Fav game?",
+        "options": [
+          "Tag",
+          "UNO",
+          "Hide seek",
+          "Jenga"
+        ]
+      }
+    ],
+    "answers": [
+      0,
+      1,
+      2,
+      3,
+      0
+    ],
+    "key": "6sqHiADJLnW5jD",
+    "createdAt": 1791734365163,
+    "results": [
+      {
+        "player": "Bestie",
+        "guesses": [
+          0,
+          1,
+          2,
+          3,
+          0
+        ],
+        "score": 5,
+        "total": 5,
+        "status": "real_one",
+        "timestamp": 1791734369229
+      },
+      {
+        "player": "FakeGuy",
+        "guesses": [
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "score": 0,
+        "total": 5,
+        "status": "fake_friend",
+        "timestamp": 1791734372946
+      }
+    ]
+  }
+}

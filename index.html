@@ -2,97 +2,2008 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#ffd23f">
-<meta name="description" content="Make a quiz about yourself, share the link, and see which friends really know you.">
-<title>RealOnes: who really knows you?</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#8AC0EF">
+<meta name="description" content="Find friends you shouldn't trust with Don't Block Me. Create your quiz and find friends who you can't trust!">
+<title>Find Friends you can't trust - Don't Block Me</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800;900&family=Shantell+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#231942;--paper:#f7f5ff;--lemon:#ffd23f;--mint:#7ae7c7;--lilac:#b8a4f5;--bad:#c2255c}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.5 system-ui,sans-serif}
-main{max-width:520px;margin:0 auto;padding:18px 16px 64px}
-h1{font:800 clamp(1.9rem,8vw,2.6rem)/1.05 ui-rounded,"Arial Rounded MT Bold","Avenir Next",system-ui,sans-serif;margin:.6em 0 .3em}
-a{color:inherit}
-.logo{display:inline-flex;align-items:center;gap:8px;font:800 1.25rem ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;text-decoration:none}
-.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding:14px;margin:16px 0}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-button,input{font:inherit;color:inherit}
-input{width:100%;padding:12px;border:2px solid var(--ink);border-radius:10px;background:#fff}
-.opt{padding:10px;border:2px solid var(--ink);border-radius:10px;background:#fff;cursor:pointer;text-align:left}
-.opt.on{background:var(--mint);font-weight:700}
-.btn{display:block;width:100%;padding:14px;margin-top:18px;border:2px solid var(--ink);border-radius:12px;background:var(--lemon);box-shadow:4px 4px 0 var(--ink);font-weight:800;text-align:center;text-decoration:none;cursor:pointer}
-.btn:disabled{opacity:.45;box-shadow:none;cursor:not-allowed}
-:focus-visible{outline:3px solid var(--lilac);outline-offset:2px}
-.row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-top:1px dashed #23194255}
-.ok{color:#0b7a5f}.no{color:var(--bad)}.muted{opacity:.7;font-size:.9rem}
-summary{cursor:pointer}
+:root {
+  --sky: #8AC0EF;
+  --sky-light: #e0f2fe;
+  --ink: #0f172a;
+  --blue: #0284c7;
+  --pink: #f43f5e;
+  --green: #22c55e;
+  --yellow: #fde047;
+  --font-main: 'Shantell Sans', 'Fredoka', ui-rounded, system-ui, sans-serif;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--sky);
+  color: var(--ink);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+}
+body {
+  position: relative;
+  background: linear-gradient(180deg, #8AC0EF 0%, #bde0fe 100%);
+  min-height: 100vh;
+}
+
+/* Background floating clouds */
+.bg-cloud {
+  position: fixed;
+  pointer-events: none;
+  opacity: 0.55;
+  z-index: 0;
+  animation: floatCloud 14s ease-in-out infinite alternate;
+}
+.bg-cloud-1 { top: 4%; left: -20px; width: 140px; }
+.bg-cloud-2 { top: 22%; right: -30px; width: 160px; animation-duration: 18s; animation-delay: -4s; }
+.bg-cloud-3 { bottom: 12%; left: -10px; width: 130px; animation-duration: 16s; animation-delay: -8s; }
+@keyframes floatCloud {
+  0% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(-12px) translateX(10px); }
+  100% { transform: translateY(4px) translateX(-6px); }
+}
+
+/* Top Creator Credit throughout the page - NO white box, just clean text */
+.top-creator-banner {
+  width: 100%;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  color: #0f172a;
+  text-align: center;
+  padding: 10px 14px 4px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  position: relative;
+  z-index: 100;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7);
+}
+.top-creator-banner .heart-pulse {
+  display: inline-block;
+  animation: heartBeat 1.4s ease-in-out infinite;
+}
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.22); }
+  40% { transform: scale(1); }
+  60% { transform: scale(1.18); }
+}
+
+header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 10px 16px;
+}
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.header-logo img {
+  height: 48px;
+  width: auto;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lang-pill {
+  background: white;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  user-select: none;
+  transition: transform 0.1s;
+}
+.lang-pill:active { transform: scale(0.96); }
+.menu-btn {
+  background: white;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+main {
+  position: relative;
+  z-index: 5;
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 0 14px 60px;
+}
+
+/* Category pills row */
+.category-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 6px 0 12px;
+}
+.cat-pill {
+  background: #bae6fd;
+  color: #0369a1;
+  border: 1.5px solid #7dd3fc;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Numbers bar 1..10 */
+.numbers-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border: 2px dashed #bae6fd;
+  border-radius: 20px;
+  padding: 6px 10px;
+  margin-bottom: 12px;
+}
+.num-box {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #64748b;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.num-box.active {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0284c7;
+  border-radius: 999px;
+  transform: scale(1.1);
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4);
+}
+.num-box.correct {
+  background: #bbf7d0;
+  border-color: #4ade80;
+  color: #15803d;
+  transform: scale(1.08);
+}
+.num-box.wrong {
+  background: #fecaca;
+  border-color: #f87171;
+  color: #b91c1c;
+  transform: scale(1.08);
+}
+
+/* Creation progress bar */
+.creation-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.creation-progress-track {
+  flex: 1;
+  height: 14px;
+  background: rgba(255,255,255,0.7);
+  border: 2px solid #0284c7;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.creation-progress-fill {
+  height: 100%;
+  background: #f43f5e;
+  border-radius: 999px;
+  transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.creation-progress-label {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #0284c7;
+}
+
+/* Sliding question container & keyframe animations */
+.question-slide-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 4px;
+}
+.question-card-slider {
+  display: flex;
+  width: 100%;
+  transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease;
+}
+.question-card-slider.slide-out {
+  transform: translateX(-110%) rotate(-3deg);
+  opacity: 0;
+}
+.question-card-slider.slide-in {
+  animation: slideInRight 0.32s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+@keyframes slideInRight {
+  from { transform: translateX(110%) rotate(3deg); opacity: 0; }
+  to { transform: translateX(0) rotate(0deg); opacity: 1; }
+}
+
+/* Notebook paper card */
+.quiz-notebook-card {
+  background: #ffffff;
+  border: 3px solid #e0f2fe;
+  border-radius: 28px;
+  box-shadow: 0 10px 25px rgba(2, 132, 199, 0.12);
+  padding: 16px 14px 18px;
+  position: relative;
+  width: 100%;
+}
+.washi-tape-pink {
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  width: 70px;
+  height: 20px;
+  background: #fca5a5;
+  opacity: 0.85;
+  transform: rotate(-3deg);
+  border-radius: 3px;
+  z-index: 5;
+}
+.binder-holes {
+  position: absolute;
+  left: 10px;
+  top: 35px;
+  bottom: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 5;
+}
+.binder-hole {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+}
+
+.ques-tape-badge {
+  display: inline-block;
+  background: #fef08a;
+  border: 1.5px dashed #facc15;
+  border-radius: 10px;
+  padding: 3px 14px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #854d0e;
+  margin-bottom: 6px;
+}
+.ques-title-text {
+  font-size: 1.3rem;
+  font-weight: 900;
+  line-height: 1.3;
+  color: #0f172a;
+  text-align: center;
+  padding: 0 16px;
+}
+.user-highlight {
+  color: var(--pink);
+  text-decoration: underline wavy var(--blue) 2px;
+  text-underline-offset: 4px;
+}
+.ques-emoji {
+  display: block;
+  font-size: 1.6rem;
+  margin-top: 2px;
+  text-align: center;
+}
+
+.bear-avatar-corner {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 80px;
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08));
+}
+
+/* Stacked options for quiz creation */
+.options-stacked-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+.stacked-option-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 8px 12px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+  transition: transform 0.12s, border-color 0.12s, background-color 0.12s;
+  user-select: none;
+  position: relative;
+}
+.stacked-option-card:active {
+  transform: scale(0.98);
+}
+.stacked-option-card.selected {
+  border-color: #22c55e;
+  background: #f0fdf4;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+.stacked-option-thumb {
+  width: 58px;
+  height: 58px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #f1f5f9;
+}
+.stacked-option-label {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+}
+.squiggly-line {
+  display: block;
+  width: 50px;
+  height: 5px;
+  background-image: radial-gradient(circle, #facc15 50%, transparent 50%);
+  background-size: 8px 5px;
+  background-repeat: repeat-x;
+  margin-top: 2px;
+}
+
+/* 2-Column Option Cards for Player */
+.options-2col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+.player-option-tile {
+  background: #ffffff;
+  border: 2.5px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 8px 8px 10px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+  transition: transform 0.12s, border-color 0.12s, background-color 0.12s;
+  user-select: none;
+  position: relative;
+}
+.player-option-tile:active {
+  transform: scale(0.97);
+}
+.player-thumb-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 0.95;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f1f5f9;
+  margin-bottom: 6px;
+}
+.player-thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.player-option-label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+.player-option-tile.correct-pick {
+  border-color: #22c55e;
+  background: #f0fdf4;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+}
+.check-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(34, 197, 94, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: zoomBounce 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 14px;
+}
+@keyframes zoomBounce {
+  0% { transform: scale(0.2); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.overlay-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: white;
+  border: 3px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 900;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.skip-btn-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px 16px;
+  background: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+  margin-top: 14px;
+  transition: transform 0.1s;
+}
+.skip-btn-pill:active { transform: scale(0.97); }
+
+/* Buttons */
+.btn-blue-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 15px 20px;
+  background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.4);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.1s;
+  user-select: none;
+}
+.btn-blue-pill:active {
+  transform: translateY(2px);
+}
+.btn-blue-pill:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Polaroid gender selector */
+.gender-cards-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 18px 0;
+}
+.polaroid-card {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: all 0.15s ease;
+}
+.polaroid-card.selected {
+  border-color: #0284c7;
+  background: #f0f9ff;
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25);
+}
+.polaroid-card img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-bottom: 6px;
+}
+.polaroid-card b {
+  display: block;
+  font-size: 1.1rem;
+}
+
+/* Woohoo celebration screen */
+.woohoo-card {
+  background: #ffffff;
+  border: 3px solid #7dd3fc;
+  border-radius: 32px;
+  padding: 24px 18px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(2, 132, 199, 0.15);
+  margin-top: 14px;
+}
+.yellow-notepad {
+  background: #fef9c3;
+  border: 2px solid #fef08a;
+  border-radius: 22px;
+  padding: 18px 16px;
+  margin: 16px 0 20px;
+  position: relative;
+}
+
+/* =========================================================================
+   EXACT COMIC THEATER STAGE & ANIMATIONS (MATCHING BLOCK.YOUTEST.ME)
+   ========================================================================= */
+.comic-theater-shell {
+  background-color: #d1e6fd;
+  background-image: url(/static/assets/img/player/clouds-bg.webp);
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 32px;
+  border: 4px solid #ffffff;
+  box-shadow: 0 12px 36px rgba(2, 132, 199, 0.25);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.theater-stage-base {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Characters and stage placement */
+.comic-actors-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  position: relative;
+  z-index: 4;
+  margin-bottom: 30px;
+  height: 170px;
+  width: 100%;
+  padding: 0 16px;
+}
+
+/* Creator entrance walk-in animation */
+.creator-walking-anim {
+  width: 38%;
+  max-width: 155px;
+  height: auto;
+  object-fit: contain;
+  animation: 2.5s linear forwards creatorWalkIn;
+  transform: translate(-120%);
+}
+@keyframes creatorWalkIn {
+  0% { transform: translate(-120%); }
+  100% { transform: translate(0%); }
+}
+
+.creator-stopped-img {
+  width: 38%;
+  max-width: 155px;
+  height: auto;
+  object-fit: contain;
+}
+
+.player-standing-img {
+  width: 30%;
+  max-width: 125px;
+  height: auto;
+  object-fit: contain;
+}
+
+.creator-phone-img {
+  width: 40%;
+  max-width: 160px;
+  height: auto;
+  object-fit: contain;
+}
+
+.player-confused-img {
+  width: 33%;
+  max-width: 135px;
+  height: auto;
+  object-fit: contain;
+  transform: scaleX(-1);
+}
+
+.creator-faceup-img {
+  width: 27%;
+  max-width: 110px;
+  height: auto;
+  object-fit: contain;
+  margin-right: 50px;
+  transform: scaleX(-1);
+}
+
+.player-faceup-img {
+  width: 27%;
+  max-width: 110px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Continuous Walking Reaction Animation across stage (9.8s) */
+.reaction-walking-good {
+  width: 60%;
+  max-width: 240px;
+  height: auto;
+  margin-top: 5%;
+  animation: 9.8s linear infinite ReactionWalking;
+  transform: translate(-180%) scaleX(-1) translateY(-15%);
+  will-change: transform;
+}
+.reaction-walking-bad {
+  width: 50%;
+  max-width: 200px;
+  height: auto;
+  animation: 9.8s linear infinite ReactionWalking;
+  transform: translate(-180%) scaleX(-1) translateY(-15%);
+  will-change: transform;
+}
+.reaction-medium-img {
+  width: 48%;
+  max-width: 190px;
+  height: auto;
+  margin: 0 auto;
+}
+
+@keyframes ReactionWalking {
+  0% { transform: translate(-100%) scaleX(-1) translateY(-15%); }
+  42% { transform: translate(190%) scaleX(-1) translateY(-15%); }
+  44% { transform: translate(190%) scaleX(1) translateY(-15%); }
+  45.5% { transform: translate(190%) scaleX(1) translateY(-15%); }
+  97.5% { transform: translate(-100%) scaleX(1) translateY(-15%); }
+  100% { transform: translate(-100%) scaleX(-1) translateY(-15%); }
+}
+
+/* Speech Cloud Bubbles */
+.speech-bubble-layer {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 120px;
+}
+.speech-bubble-wrapper {
+  position: relative;
+  width: 260px;
+  animation: popBubble 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes popBubble {
+  0% { transform: scale(0.4); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.speech-bubble-wrapper.left {
+  transform: rotate(-4deg);
+}
+.speech-bubble-wrapper.right {
+  transform: rotate(4deg);
+}
+.speech-bubble-cloud-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+}
+.speech-bubble-text-box {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 82%;
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  color: #0f172a;
+}
+
+/* Hanging Score Counter Board with Spring Drop */
+.score-board-hanging-box {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 88%;
+  max-width: 340px;
+  z-index: 12;
+  animation: scoreDropSpring 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes scoreDropSpring {
+  0% { transform: translateX(-50%) translateY(-120%) scale(0.95); opacity: 0; }
+  100% { transform: translateX(-50%) translateY(0%) scale(1); opacity: 1; }
+}
+
+.score-counter-bg-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.your-score-tag-wrapper {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  animation: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both yourScoreBounceIn;
+}
+@keyframes yourScoreBounceIn {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.35); }
+  60% { opacity: 1; transform: translate(-50%, -50%) scale(1.12); }
+  82% { transform: translate(-50%, -50%) scale(0.96); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.svg-score-text-wrapper {
+  position: absolute;
+  bottom: 8%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s both scoreCounterBounceIn;
+}
+@keyframes scoreCounterBounceIn {
+  0% { opacity: 0; transform: scale(0.35); }
+  60% { opacity: 1; transform: scale(1.12); }
+  82% { transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.score-svg-display {
+  width: 72%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.svg-text-outer-shell {
+  fill: none;
+  stroke: #ffffff;
+  stroke-linejoin: round;
+  stroke-width: 16px;
+  font-family: inherit;
+  font-weight: 900;
+}
+.svg-text-blue-rim {
+  fill: none;
+  stroke: #eff7ff;
+  stroke-linejoin: round;
+  stroke-width: 10px;
+  font-family: inherit;
+  font-weight: 900;
+}
+.svg-text-silver-rim {
+  fill: none;
+  stroke: #f0f3f8;
+  stroke-linejoin: round;
+  stroke-width: 10px;
+  font-family: inherit;
+  font-weight: 900;
+}
+.svg-text-face {
+  stroke: none;
+  font-family: inherit;
+  font-weight: 900;
+}
+
+/* Bottom CTA Area (cta-bg.svg) */
+.cta-theater-card {
+  background: url(/static/assets/img/player/completed/cta-bg.svg) 0 0/cover no-repeat;
+  width: 100%;
+  border-radius: 28px;
+  padding: 24px 18px;
+  margin-top: 14px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.15);
+}
+.cta-button-tada {
+  animation: 1s ease-in-out 1.2s both buttonTada;
+}
+@keyframes buttonTada {
+  0%, 100% { transform: scale(1) rotate(0); }
+  10%, 20% { transform: scale(0.96) rotate(-2deg); }
+  30%, 50%, 70%, 90% { transform: scale(1.035) rotate(2deg); }
+  40%, 60%, 80% { transform: scale(1.035) rotate(-2deg); }
+}
+
+/* Falling celebration confetti */
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 25;
+  animation: confettiFall 3.5s linear infinite;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(520px) rotate(720deg); opacity: 0; }
+}
+
+/* Toast alert */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #0f172a;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  z-index: 1000;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
 </style>
 </head>
 <body>
-<main>
-<a class="logo" href="#/"><svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3c11 0 17 8 17 18s-7 16-17 16S3 31 3 21 9 3 20 3z" fill="#ffd23f" stroke="#231942" stroke-width="2.5"/><circle cx="14" cy="19" r="2.6" fill="#231942"/><circle cx="26" cy="19" r="2.6" fill="#231942"/><path d="M14 27q6 5 12 0" stroke="#231942" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>RealOnes</a>
-<div id="app"></div>
-</main>
+
+<div class="top-creator-banner">
+  <span>made by Pankesh</span> <span class="heart-pulse">💗</span>
+</div>
+
+<img class="bg-cloud bg-cloud-1" src="/static/assets/img/user/home/clouds.webp" alt="">
+<img class="bg-cloud bg-cloud-2" src="/static/assets/img/user/home/clouds.webp" alt="">
+<img class="bg-cloud bg-cloud-3" src="/static/assets/img/user/home/clouds.webp" alt="">
+
+<header>
+  <a class="header-logo" href="#/">
+    <img src="/static/assets/img/logo-f.webp" alt="Don't Block Me">
+  </a>
+  <div class="header-right">
+    <div class="lang-pill" id="soundToggle">
+      <span id="soundIcon">🔊</span> English
+    </div>
+    <div class="menu-btn" onclick="location.hash='#/'">☰</div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<div id="toast" class="toast">Link copied! 📋</div>
+
 <script>
-const Q=[
-["My ideal weekend is…","Sleeping in","Out with friends","Binge-watching","Exploring somewhere new"],
-["My comfort food is…","Pizza","Noodles","Ice cream","Fries"],
-["My biggest pet peeve is…","Loud chewing","People who are late","Spoilers","Being left on read"],
-["If I won the lottery, I’d first…","Travel the world","Buy a house","Invest it","Treat everyone"],
-["The app I use most is…","Music","Camera","Chat","Videos"],
-["My friends would call me…","The planner","The funny one","The listener","The wildcard"]];
-const $=s=>document.querySelector(s),app=$('#app');
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-async function api(p,o){
-  const r=await fetch('/api/quizzes'+p,o&&{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)});
-  const d=await r.json();
-  if(!r.ok)throw new Error(d.error||'Something went wrong.');
-  return d;
+// Sound engine with exact audio assets from block.youtest.me
+const audioTracks = {
+  pop: new Audio('/static/assets/audio/pop.mp3'),
+  scorePop: new Audio('/static/assets/audio/scorePop.mp3'),
+  dunDun: new Audio('/static/assets/audio/dun-dun.mp3'),
+  whoosh: new Audio('/static/assets/audio/whoosh.mp3'),
+  swipe: new Audio('/static/assets/audio/swipe.mp3'),
+  walk: new Audio('/static/assets/audio/walk.mp3'),
+  huh: new Audio('/static/assets/audio/huh.mp3'),
+  umm: new Audio('/static/assets/audio/umm.mp3'),
+  aaapo: new Audio('/static/assets/audio/aaapo.mp3'),
+  bounce: new Audio('/static/assets/audio/bounce.mp3'),
+  resultHigh: new Audio('/static/assets/audio/result-high.mp3'),
+  resultMedium: new Audio('/static/assets/audio/result-medium.mp3'),
+  resultLow: new Audio('/static/assets/audio/result-low.mp3'),
+  complete: new Audio('/static/assets/audio/complete-bg.mp3')
+};
+
+// Preload audio
+Object.values(audioTracks).forEach(a => {
+  try { a.preload = 'auto'; } catch {}
+});
+
+let soundEnabled = true;
+function playSound(name, opts = {}) {
+  if (!soundEnabled) return;
+  try {
+    const a = audioTracks[name];
+    if (a) {
+      a.currentTime = 0;
+      if (opts.playbackRate) a.playbackRate = opts.playbackRate;
+      if (opts.volume !== undefined) a.volume = opts.volume;
+      a.play().catch(() => {});
+    }
+  } catch {}
 }
-const form=()=>Q.map((q,i)=>`<div class="card"><b>${i+1}. ${q[0]}</b><div class="opts">${q.slice(1).map((o,j)=>`<button class="opt" data-q="${i}" data-o="${j}">${o}</button>`).join('')}</div></div>`).join('');
-const rows=(ans,g)=>Q.map((q,i)=>`<div class="row"><span>${q[0]}</span><b class="${g[i]===ans[i]?'ok':'no'}">${q[g[i]+1]}${g[i]===ans[i]?' ✓':' ✗ (was '+q[ans[i]+1]+')'}</b></div>`).join('');
-function wire(go){
-  const a=Array(Q.length).fill(-1),n=$('#name'),b=$('#go');
-  const upd=()=>{b.disabled=!n.value.trim()||a.includes(-1)};
-  n.oninput=upd;
-  app.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
-    const i=+o.dataset.q;a[i]=+o.dataset.o;
-    app.querySelectorAll('[data-q="'+i+'"]').forEach(x=>x.classList.toggle('on',x===o));
-    upd();
+
+const soundBtn = document.getElementById('soundToggle');
+const soundIcon = document.getElementById('soundIcon');
+soundBtn.onclick = () => {
+  soundEnabled = !soundEnabled;
+  soundIcon.textContent = soundEnabled ? '🔊' : '🔇';
+  soundBtn.style.opacity = soundEnabled ? '1' : '0.65';
+};
+
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const toastEl = $('#toast');
+function showToast(msg = 'Copied to clipboard! 📋') {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  setTimeout(() => toastEl.classList.remove('show'), 2200);
+}
+
+const esc = s => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+async function api(path, body) {
+  const opts = body ? {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  } : {};
+  const res = await fetch(path, opts);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+  return data;
+}
+
+// Typewriter text animator
+function typeWriter(el, htmlString, speed = 32) {
+  return new Promise(resolve => {
+    const temp = document.createElement('div');
+    temp.innerHTML = htmlString;
+    const fullText = temp.innerText || temp.textContent;
+    el.innerHTML = '';
+    let i = 0;
+    const timer = setInterval(() => {
+      el.textContent = fullText.slice(0, i + 1);
+      i++;
+      if (i >= fullText.length) {
+        clearInterval(timer);
+        el.innerHTML = htmlString;
+        resolve();
+      }
+    }, speed);
   });
-  upd();
-  b.onclick=async()=>{b.disabled=true;try{await go(n.value.trim(),a)}catch(e){alert(e.message);upd()}};
 }
-const routes={
-  home(){
-    app.innerHTML=`<h1>Who really knows you?</h1><p>Answer 6 questions about yourself, share your link, and see which friends get you right.</p><input id="name" maxlength="24" placeholder="Your name" aria-label="Your name">${form()}<button id="go" class="btn">Create my quiz</button>`;
-    wire(async(name,answers)=>{const r=await api('',{name,answers});location.hash=`#/share/${r.id}/${r.key}`});
+
+const routes = {
+  // Page 1: Home Screen
+  async home() {
+    app.innerHTML = `
+      <div style="text-align: center; margin-top: 10px;">
+        <img src="/static/assets/img/user/home/characters.webp" alt="Bubu and Dudu" style="width: 200px; height: auto; margin-bottom: 8px;">
+        
+        <h1 style="font-size: 2.1rem; font-weight: 900; line-height: 1.2; margin: 4px 0 16px;">
+          create your quiz<br>&<br>
+          <span style="color: #0f172a; background: var(--yellow); padding: 2px 10px; border-radius: 8px;">block</span> your fake friends
+        </h1>
+
+        <button id="startCreateBtn" class="btn-blue-pill cta-button-tada" style="margin-bottom: 24px;">
+          create quiz ➔
+        </button>
+
+        <div style="background: white; border-radius: 24px; padding: 18px 16px; border: 2.5px solid #e0f2fe; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+          <div style="font-weight: 800; font-size: 1.15rem; color: #0f172a; margin-bottom: 12px;">how to play?</div>
+          <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+            <div style="background: #fef08a; width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">1</div>
+            <div style="font-size: 0.9rem; color: #475569;"><b>CREATE YOUR QUIZ:</b> Answer 10 quick questions about yourself that reveal how well others know you.</div>
+          </div>
+          <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+            <div style="background: #fef08a; width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">2</div>
+            <div style="font-size: 0.9rem; color: #475569;"><b>SHARE WITH FRIENDS:</b> Challenge friends to prove they're not faking it!</div>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <div style="background: #fef08a; width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">3</div>
+            <div style="font-size: 0.9rem; color: #475569;"><b>FIND FAKE FRIENDS:</b> Check scores and block low scorers! 🚫</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    $('#startCreateBtn').onclick = () => {
+      playSound('pop');
+      location.hash = '#/create-name';
+    };
   },
-  share(id,key){
-    const link=`${location.origin}/#/q/${id}`;
-    app.innerHTML=`<h1>Your quiz is live</h1><div class="card"><p class="muted">Send this link to your friends:</p><input id="l" readonly value="${link}" aria-label="Quiz link"><button id="c" class="btn">Copy link</button></div><a class="btn" href="#/board/${id}/${key}">Open my scoreboard</a><p class="muted">Bookmark your scoreboard page. It's the only way back to your results.</p>`;
-    $('#c').onclick=async()=>{try{navigator.share?await navigator.share({title:'RealOnes',url:link}):await navigator.clipboard.writeText(link)}catch{}$('#l').select()};
+
+  // Page 2: Name Input
+  async 'create-name'() {
+    app.innerHTML = `
+      <div class="quiz-notebook-card" style="margin-top: 24px; text-align: center; padding: 24px 18px;">
+        <div style="position: relative; display: inline-block; margin-bottom: 8px;">
+          <div style="background: #ffffff; border: 2px solid #0f172a; border-radius: 999px; padding: 6px 16px; font-weight: 800; font-size: 1.15rem;">
+            what's your <span style="color: var(--pink);">name?</span>
+          </div>
+          <img src="/static/assets/img/user/name/name-input-bubu-mascot.webp" alt="Panda" style="position: absolute; right: -40px; top: -20px; width: 64px; height: auto;">
+        </div>
+
+        <div style="position: relative; margin: 16px 0 20px;">
+          <input id="nameInput" style="width: 100%; padding: 16px 50px 16px 18px; border: 2.5px solid #0284c7; border-radius: 999px; font-family: inherit; font-size: 1.2rem; font-weight: 800; outline: none; background: #ffffff;" placeholder="name..." maxlength="15" autofocus>
+          <span id="charCount" style="position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-weight: 700; color: #94a3b8; font-size: 0.9rem;">0/15</span>
+        </div>
+
+        <button id="continueNameBtn" class="btn-blue-pill" disabled>
+          continue ➔
+        </button>
+      </div>
+    `;
+
+    const inp = $('#nameInput');
+    const cnt = $('#charCount');
+    const btn = $('#continueNameBtn');
+
+    inp.oninput = () => {
+      const val = inp.value.trim();
+      cnt.textContent = `${inp.value.length}/15`;
+      btn.disabled = !val;
+    };
+
+    btn.onclick = () => {
+      playSound('pop');
+      sessionStorage.setItem('dbm_name', inp.value.trim());
+      location.hash = '#/create-gender';
+    };
   },
-  async q(id){
-    const {name}=await api('/'+id);
-    app.innerHTML=`<h1>How well do you know ${esc(name)}?</h1><input id="name" maxlength="24" placeholder="Your name" aria-label="Your name">${form()}<button id="go" class="btn">See my score</button>`;
-    wire(async(player,guesses)=>{
-      const r=await api(`/${id}/play`,{player,guesses});
-      app.innerHTML=`<h1>${r.score}/${r.total}</h1><p>${r.score>=5?'You’re a real one!':r.score>=3?'Not bad. You know the basics.':'Time to catch up on '+esc(name)+'.'}</p><div class="card">${rows(r.answers,guesses)}</div><a class="btn" href="#/">Make my own quiz</a>`;
-    });
+
+  // Page 3: Gender Selector
+  async 'create-gender'() {
+    const creatorName = sessionStorage.getItem('dbm_name') || 'Friend';
+
+    app.innerHTML = `
+      <div style="text-align: center; margin-top: 20px;">
+        <div style="font-weight: 800; font-size: 1.1rem; color: #475569;">hi, <span style="color:var(--blue);">${esc(creatorName)}</span> 👋</div>
+        <h2 style="font-size: 1.8rem; font-weight: 900; margin: 4px 0 16px;">choose your <span style="text-decoration: underline wavy var(--yellow) 3px;">gender</span></h2>
+
+        <div class="gender-cards-row">
+          <div class="polaroid-card selected" id="genderMale">
+            <img src="/static/assets/img/user/name/male.webp" alt="Male">
+            <b>Male</b>
+          </div>
+          <div class="polaroid-card" id="genderFemale">
+            <img src="/static/assets/img/user/name/female.webp" alt="Female">
+            <b>Female</b>
+          </div>
+        </div>
+
+        <button id="startQuizBtn" class="btn-blue-pill">
+          continue ➔
+        </button>
+      </div>
+    `;
+
+    let selectedGender = 'male';
+    const maleCard = $('#genderMale');
+    const femaleCard = $('#genderFemale');
+
+    maleCard.onclick = () => {
+      playSound('pop');
+      selectedGender = 'male';
+      maleCard.classList.add('selected');
+      femaleCard.classList.remove('selected');
+    };
+    femaleCard.onclick = () => {
+      playSound('pop');
+      selectedGender = 'female';
+      femaleCard.classList.add('selected');
+      maleCard.classList.remove('selected');
+    };
+
+    $('#startQuizBtn').onclick = () => {
+      playSound('pop');
+      sessionStorage.setItem('dbm_gender', selectedGender);
+      location.hash = '#/creating';
+    };
   },
-  async board(id,key){
-    const d=await api(`/${id}/board?key=${encodeURIComponent(key)}`),r=[...d.results].sort((a,b)=>b.score-a.score);
-    app.innerHTML=`<h1>${esc(d.name)}'s scoreboard</h1><p class="muted">${r.length} ${r.length==1?'friend has':'friends have'} played. <a href="#/q/${id}">Quiz link</a></p>`+(r.length?r.map((p,i)=>`<details class="card"><summary><b>${i+1}. ${esc(p.player)}</b>, ${p.score}/${Q.length} <span class="muted">${p.score>=5?'Real one':p.score<=1?'Barely knows you':''}</span></summary>${rows(d.answers,p.guesses)}</details>`).join(''):'<div class="card">Nobody has played yet. Share your quiz link to get started.</div>');
+
+  // Page 4: User Creating Quiz with exact Slide & Option Animations
+  async creating() {
+    const creatorName = sessionStorage.getItem('dbm_name') || 'Friend';
+    const creatorGender = sessionStorage.getItem('dbm_gender') || 'male';
+
+    app.innerHTML = `<div class="quiz-notebook-card" style="text-align:center; padding: 40px;"><h2 style="font-weight:800;">Loading questions... ✨</h2></div>`;
+    const { questions: pool } = await api('/api/questions');
+
+    let selectedQuestions = pool.slice(0, 10);
+    let remainingPool = pool.slice(10);
+    let currentIndex = 0;
+    const answers = new Array(10).fill(-1);
+
+    function renderSlide() {
+      const q = selectedQuestions[currentIndex];
+      const qText = q.question.replace(/userName/g, creatorName);
+      const headerUrl = `/static/assets/img/ques_images/${q.id}/header.webp`;
+      const progressPercent = Math.round(((currentIndex + 1) / 10) * 100);
+
+      app.innerHTML = `
+        <div class="creation-progress-wrap">
+          <div class="creation-progress-track">
+            <div class="creation-progress-fill" style="width: ${progressPercent}%;"></div>
+          </div>
+          <div class="creation-progress-label">${currentIndex + 1}/10</div>
+        </div>
+
+        <div class="question-slide-container">
+          <div class="question-card-slider slide-in" id="sliderCard">
+            <div class="quiz-notebook-card">
+              <div class="washi-tape-pink"></div>
+              <div class="binder-holes">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+              </div>
+
+              <div style="text-align: center; margin-bottom: 4px;">
+                <div class="ques-tape-badge">Question ${currentIndex + 1}</div>
+              </div>
+
+              <div class="ques-title-text">
+                ${esc(qText).replace(new RegExp(esc(creatorName), 'gi'), `<span class="user-highlight">${esc(creatorName)}</span>`)}
+              </div>
+              <span class="ques-emoji">💸</span>
+
+              <img class="bear-avatar-corner" src="${headerUrl}" onerror="this.src='/static/assets/img/player/completed/dudu-standing.webp'" alt="">
+
+              <div class="options-stacked-list">
+                ${q.options.map((opt, optIdx) => {
+                  const thumbUrl = `/static/assets/img/ques_images/${q.id}/${optIdx}_thumb.webp`;
+                  const isChosen = answers[currentIndex] === optIdx;
+                  return `
+                    <div class="stacked-option-card ${isChosen ? 'selected' : ''}" data-opt="${optIdx}">
+                      <img class="stacked-option-thumb" src="${thumbUrl}" onerror="this.src='/static/assets/img/player/completed/stage.svg'" alt="">
+                      <div>
+                        <div class="stacked-option-label">${esc(opt)}</div>
+                        <span class="squiggly-line"></span>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+
+              <button id="skipQuestionBtn" class="skip-btn-pill">
+                Skip Question 🔄
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Handle Option Tap with smooth slide out and next slide in
+      app.querySelectorAll('.stacked-option-card').forEach(card => {
+        card.onclick = () => {
+          playSound('pop');
+          const opt = +card.dataset.opt;
+          answers[currentIndex] = opt;
+          card.classList.add('selected');
+
+          const slider = $('#sliderCard');
+          slider.classList.remove('slide-in');
+          slider.classList.add('slide-out');
+
+          setTimeout(() => {
+            if (currentIndex < 9) {
+              playSound('whoosh');
+              currentIndex++;
+              renderSlide();
+            } else {
+              finishQuizCreation();
+            }
+          }, 260);
+        };
+      });
+
+      // Handle Skip
+      $('#skipQuestionBtn').onclick = () => {
+        playSound('swipe');
+        if (remainingPool.length > 0) {
+          selectedQuestions[currentIndex] = remainingPool.pop();
+          answers[currentIndex] = -1;
+          renderSlide();
+        } else {
+          showToast('No more questions in pool.');
+        }
+      };
+    }
+
+    async function finishQuizCreation() {
+      app.innerHTML = `
+        <div class="quiz-notebook-card" style="text-align: center; padding: 40px 16px;">
+          <h2 style="font-weight: 800;">Saving your quiz... ✨</h2>
+        </div>
+      `;
+      try {
+        const payload = {
+          name: creatorName,
+          gender: creatorGender,
+          questions: selectedQuestions,
+          answers: answers
+        };
+        const res = await api('/api/quizzes', payload);
+        playSound('complete');
+        sessionStorage.setItem('dbm_created_id', res.id);
+        sessionStorage.setItem('dbm_created_key', res.key);
+        location.hash = `#/woohoo/${res.id}/${res.key}`;
+      } catch (err) {
+        alert(err.message);
+        renderSlide();
+      }
+    }
+
+    renderSlide();
+  },
+
+  // Page 5: Woohoo Screen
+  async woohoo(id, key) {
+    app.innerHTML = `
+      <div class="woohoo-card">
+        <div style="font-size: 2.4rem; font-weight: 900; color: #0284c7; letter-spacing: 1px;">WOOHOO! 🎉</div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 12px;">your quiz is <span style="color:#0284c7; text-decoration: underline;">Ready</span> !</div>
+
+        <div class="yellow-notepad">
+          <div style="text-align: center;">
+            <img src="/static/assets/img/player/completed/dudu-8.webp" alt="Party Bear" style="height: 120px; object-fit: contain;">
+          </div>
+          <p style="font-size: 1.15rem; font-weight: 900; line-height: 1.35; color: #854d0e; margin: 10px 0 0;">
+            send it to your friends and see who <span style="color:#f43f5e; text-decoration: underline;">REALLY</span> knows you! 😎
+          </p>
+        </div>
+
+        <button id="gotoShareBtn" class="btn-blue-pill cta-button-tada" style="margin-bottom: 12px;">
+          ➥ SHARE NOW!
+        </button>
+
+        <p style="font-size: 0.9rem; font-weight: 800; color: #64748b; margin: 0;">
+          the more friends play, the more fun! 🎮
+        </p>
+      </div>
+    `;
+
+    $('#gotoShareBtn').onclick = () => {
+      playSound('pop');
+      location.hash = `#/share/${id}/${key}`;
+    };
+  },
+
+  // Page 6: Share Screen
+  async share(id, key) {
+    const origin = window.location.origin;
+    const shareUrl = `${origin}/#/q/${id}`;
+
+    app.innerHTML = `
+      <div class="quiz-notebook-card" style="text-align: center; margin-top: 10px;">
+        <div style="margin-bottom: 10px;">
+          <div style="display: inline-block; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 999px; padding: 4px 14px; font-size: 0.85rem; font-weight: 800; margin-bottom: 4px;">
+            let's find & block <span style="color: var(--pink);">fake</span> friends
+          </div>
+          <div>
+            <img src="/static/assets/img/player/completed/dudu-phone.webp" alt="Bear on phone" style="height: 120px; object-fit: contain;">
+          </div>
+        </div>
+
+        <h1 style="font-size: 1.9rem; font-weight: 900; line-height: 1.2; margin: 4px 0 14px;">
+          share your <span style="color: var(--blue); text-decoration: underline;">link</span> 🔗<br>
+          &<br>
+          find your <span style="color: var(--pink);">fake</span> friends 🎭
+        </h1>
+
+        <div style="display: flex; align-items: center; background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 16px; padding: 6px 8px; margin: 12px 0 14px;">
+          <span style="font-size: 1.1rem; margin-right: 4px;">🔗</span>
+          <input id="shareInput" style="flex: 1; border: none; background: transparent; font-family: inherit; font-size: 0.95rem; font-weight: 700; color: #334155; outline: none;" readonly value="${shareUrl}">
+          <button id="copyShareBtn" style="background: var(--yellow); border: 1.5px solid #eab308; border-radius: 12px; padding: 8px 16px; font-weight: 800; font-size: 0.9rem; cursor: pointer;">Copy</button>
+        </div>
+
+        <button id="whatsappBtn" class="btn-blue-pill" style="background: #25d366; margin-bottom: 12px;">
+          💬 Share on WhatsApp
+        </button>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px;">
+          <div class="polaroid-card" style="padding: 10px;" onclick="navigator.clipboard && navigator.clipboard.writeText('${shareUrl}'); showToast('Instagram caption copied!');">📸 Instagram</div>
+          <div class="polaroid-card" style="padding: 10px;" onclick="navigator.clipboard && navigator.clipboard.writeText('${shareUrl}'); showToast('Snapchat link copied!');">👻 Snapchat</div>
+          <div class="polaroid-card" style="padding: 10px;" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('${shareUrl}'), '_blank')">📘 Facebook</div>
+          <div class="polaroid-card" style="padding: 10px;" onclick="window.open('https://t.me/share/url?url=' + encodeURIComponent('${shareUrl}'), '_blank')">✈️ Telegram</div>
+        </div>
+
+        <a class="btn-blue-pill" href="#/board/${id}/${key}">
+          🏆 Check Scores
+        </a>
+      </div>
+    `;
+
+    $('#copyShareBtn').onclick = async () => {
+      playSound('pop');
+      await navigator.clipboard.writeText(shareUrl);
+      $('#copyShareBtn').textContent = '✓ Copied!';
+      $('#copyShareBtn').style.background = '#86efac';
+      showToast('Copied to clipboard! 📋');
+    };
+
+    $('#whatsappBtn').onclick = () => {
+      playSound('pop');
+      const text = encodeURIComponent(`Find out if you're a REAL ONE or a FAKE FRIEND! Take my quiz here: ${shareUrl}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    };
+  },
+
+  // Page 7: Friend Taking Quiz & Full Comic Sequence (Matches video frame by frame!)
+  async q(id) {
+    app.innerHTML = `<div class="quiz-notebook-card" style="text-align:center; padding: 40px;"><h2 style="font-weight:800;">Loading quiz... ⏳</h2></div>`;
+    const quiz = await api('/api/quizzes/' + id);
+
+    // Welcome card
+    app.innerHTML = `
+      <div class="quiz-notebook-card" style="margin-top: 14px; text-align: center;">
+        <div class="washi-tape-pink"></div>
+        <div class="binder-holes">
+          <div class="binder-hole"></div>
+          <div class="binder-hole"></div>
+          <div class="binder-hole"></div>
+          <div class="binder-hole"></div>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 8px;">
+          <div style="display: inline-block; background: #ffffff; border: 2px solid #0f172a; border-radius: 999px; padding: 4px 14px; font-weight: 800; font-size: 0.9rem; margin-bottom: 8px;">
+            💭 i will find & block my fake friends
+          </div>
+          <div>
+            <img src="/static/assets/img/player/completed/dudu-phone.webp" alt="Bear" style="height: 120px; object-fit: contain;">
+          </div>
+        </div>
+
+        <h1 style="font-size: 2.1rem; font-weight: 900; line-height: 1.15; margin: 0 0 6px;">
+          will <span style="color: var(--blue); text-decoration: underline wavy var(--yellow) 3px;">${esc(quiz.name)}</span><br>
+          <span style="color: var(--pink); text-decoration: underline wavy var(--yellow) 3px;">block</span> you?
+        </h1>
+        <p style="font-weight: 700; color: #64748b; font-size: 1rem; margin: 0 0 16px;">
+          let's see how well you know ${esc(quiz.name)} 💙
+        </p>
+
+        <button id="startPlayStepBtn" class="btn-blue-pill cta-button-tada" style="margin-bottom: 16px;">
+          start quiz ➔
+        </button>
+
+        <div style="background: #fef9c3; border: 2px solid #fef08a; border-radius: 18px; padding: 12px; font-weight: 800;">
+          🏆 Scoreboard
+        </div>
+      </div>
+    `;
+
+    $('#startPlayStepBtn').onclick = () => {
+      playSound('pop');
+      renderPlayerNamePrompt();
+    };
+
+    function renderPlayerNamePrompt() {
+      app.innerHTML = `
+        <div class="quiz-notebook-card" style="margin-top: 24px; text-align: center;">
+          <div style="position: relative; display: inline-block; margin-bottom: 8px;">
+            <div style="background: #ffffff; border: 2px solid #0f172a; border-radius: 999px; padding: 6px 16px; font-weight: 800; font-size: 1.15rem;">
+              what's your <span style="color: var(--pink);">name?</span>
+            </div>
+            <img src="/static/assets/img/user/name/name-input-bubu-mascot.webp" alt="Panda" style="position: absolute; right: -40px; top: -20px; width: 64px; height: auto;">
+          </div>
+
+          <div style="position: relative; margin: 16px 0 20px;">
+            <input id="playerNameInp" style="width: 100%; padding: 16px 50px 16px 18px; border: 2.5px solid #0284c7; border-radius: 999px; font-family: inherit; font-size: 1.2rem; font-weight: 800; outline: none; background: #ffffff;" placeholder="name..." maxlength="15" autofocus>
+            <span id="playerCharCount" style="position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-weight: 700; color: #94a3b8; font-size: 0.9rem;">0/15</span>
+          </div>
+
+          <button id="continuePlayNameBtn" class="btn-blue-pill" disabled>
+            continue ➔
+          </button>
+        </div>
+      `;
+
+      const inp = $('#playerNameInp');
+      const cnt = $('#playerCharCount');
+      const btn = $('#continuePlayNameBtn');
+
+      inp.oninput = () => {
+        const val = inp.value.trim();
+        cnt.textContent = `${inp.value.length}/15`;
+        btn.disabled = !val;
+      };
+
+      btn.onclick = () => {
+        playSound('pop');
+        const playerName = inp.value.trim();
+        startQuestionLoop(playerName);
+      };
+    }
+
+    function startQuestionLoop(playerName) {
+      let currentIndex = 0;
+      const guesses = new Array(quiz.questions.length).fill(-1);
+      const isCorrectList = new Array(quiz.questions.length).fill(null);
+
+      function renderPlaySlide() {
+        const q = quiz.questions[currentIndex];
+        const qText = q.question.replace(/userName/g, quiz.name);
+        const headerUrl = `/static/assets/img/ques_images/${q.id}/header.webp`;
+
+        app.innerHTML = `
+          <div class="category-pills-wrap">
+            <span class="cat-pill">Discover more</span>
+            <span class="cat-pill">📰 Fake Friend Finder</span>
+            <span class="cat-pill">📰 Personality Quiz Platform</span>
+          </div>
+
+          <div class="numbers-bar">
+            ${quiz.questions.map((_, i) => {
+              const status = isCorrectList[i];
+              const isCur = i === currentIndex;
+              let cls = isCur ? 'active' : '';
+              let content = i + 1;
+              if (status === true) { cls = 'correct'; content = '✓'; }
+              else if (status === false) { cls = 'wrong'; content = '✗'; }
+              return `<div class="num-box ${cls}">${content}</div>`;
+            }).join('')}
+          </div>
+
+          <div class="question-slide-container">
+            <div class="question-card-slider slide-in" id="playSlider">
+              <div class="quiz-notebook-card">
+                <div style="text-align: center; margin-bottom: 4px;">
+                  <div class="ques-tape-badge">Question ${currentIndex + 1}</div>
+                </div>
+
+                <div class="ques-title-text">
+                  ${esc(qText).replace(new RegExp(esc(quiz.name), 'gi'), `<span class="user-highlight">${esc(quiz.name)}</span>`)}
+                </div>
+                <span class="ques-emoji">💸</span>
+
+                <img class="bear-avatar-corner" src="${headerUrl}" onerror="this.src='/static/assets/img/player/completed/dudu-standing.webp'" alt="">
+
+                <div class="options-2col-grid">
+                  ${q.options.map((opt, optIdx) => {
+                    const thumbUrl = `/static/assets/img/ques_images/${q.id}/${optIdx}_thumb.webp`;
+                    return `
+                      <div class="player-option-tile" data-opt="${optIdx}">
+                        <div class="player-thumb-wrap">
+                          <img src="${thumbUrl}" onerror="this.src='/static/assets/img/player/completed/stage.svg'" alt="">
+                          <div class="overlay-placeholder" id="overlay-${optIdx}"></div>
+                        </div>
+                        <div class="player-option-label">${esc(opt)}</div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        let isLocked = false;
+        app.querySelectorAll('.player-option-tile').forEach(tile => {
+          tile.onclick = async () => {
+            if (isLocked) return;
+            isLocked = true;
+            const opt = +tile.dataset.opt;
+            guesses[currentIndex] = opt;
+
+            playSound('pop');
+
+            // Show check overlay with bounce
+            const overlay = $(`#overlay-${opt}`);
+            overlay.innerHTML = `
+              <div class="check-overlay">
+                <div class="overlay-icon-circle" style="background:#22c55e;">✓</div>
+              </div>
+            `;
+            tile.classList.add('correct-pick');
+
+            // Wait 400ms then slide out smoothly to next
+            setTimeout(() => {
+              const slider = $('#playSlider');
+              slider.classList.remove('slide-in');
+              slider.classList.add('slide-out');
+
+              setTimeout(() => {
+                if (currentIndex < quiz.questions.length - 1) {
+                  playSound('whoosh');
+                  currentIndex++;
+                  renderPlaySlide();
+                } else {
+                  submitFinalPlayGuesses();
+                }
+              }, 250);
+            }, 400);
+          };
+        });
+      }
+
+      async function submitFinalPlayGuesses() {
+        app.innerHTML = `
+          <div class="quiz-notebook-card" style="text-align: center; padding: 40px 16px;">
+            <h2 style="font-weight: 800;">Calculating your score... 🧮</h2>
+          </div>
+        `;
+        try {
+          const res = await api(`/api/quizzes/${id}/play`, { player: playerName, guesses });
+          runExactComicDialogueSequence(res, quiz, playerName);
+        } catch (err) {
+          alert(err.message);
+          renderPlaySlide();
+        }
+      }
+
+      renderPlaySlide();
+    }
+
+    // =========================================================================
+    // EXACT COMIC DIALOGUE & SCORE REVEAL SEQUENCE (MATCHING BLOCK.YOUTEST.ME)
+    // =========================================================================
+    function runExactComicDialogueSequence(res, quiz, playerName) {
+      window.scrollTo(0, 0);
+      const creatorGender = quiz.gender || 'male';
+      const creatorName = quiz.name;
+      const cPrefix = creatorGender === 'male' ? 'dudu' : 'bubu';
+      const pPrefix = cPrefix === 'dudu' ? 'bubu' : 'dudu';
+
+      // Score Level: >= 8 high, >= 5 medium, < 5 low
+      const scoreLevel = res.score >= 8 ? 'high' : res.score >= 5 ? 'medium' : 'low';
+      const isGood = scoreLevel === 'high';
+      const isBad = scoreLevel === 'low';
+
+      // Start Scene 1: CreatorEntrance
+      renderScene1_Entrance();
+
+      function renderScene1_Entrance() {
+        playSound('walk');
+        app.innerHTML = `
+          <div class="comic-theater-shell" id="theaterBox">
+            <img class="theater-stage-base" src="/static/assets/img/player/completed/stage.svg" alt="">
+            
+            <div class="speech-bubble-layer" id="bubbleLayer"></div>
+
+            <div class="comic-actors-row">
+              <img id="creatorActor" class="creator-walking-anim" src="/static/assets/img/player/completed/${cPrefix}-walk.webp" alt="">
+              <img id="playerActor" class="player-standing-img" src="/static/assets/img/player/completed/${pPrefix}-standing.webp" alt="">
+            </div>
+          </div>
+        `;
+
+        // When creator finishes walking (2.5s)
+        setTimeout(() => {
+          playSound('huh');
+          const cImg = $('#creatorActor');
+          if (cImg) {
+            cImg.className = 'creator-stopped-img';
+            cImg.src = `/static/assets/img/player/completed/${cPrefix}-walk-stop.webp`;
+          }
+
+          // Creator Line 1 (left)
+          showSpeechBubble('left', 'should i <span style="color:#ef4444; font-weight:900;">block</span> you? 🤬', () => {
+            setTimeout(() => {
+              playSound('umm');
+              // Player Line 2 (right)
+              showSpeechBubble('right', 'but... I\'m not your <span style="color:#0284c7; font-weight:900;">fake</span> <span style="text-decoration: underline wavy #ff3d64;">friend</span> 🥺', () => {
+                setTimeout(renderScene2_Conversation, 1100);
+              });
+            }, 800);
+          });
+        }, 2500);
+      }
+
+      // Scene 2: Conversation
+      function renderScene2_Conversation() {
+        app.innerHTML = `
+          <div class="comic-theater-shell" id="theaterBox">
+            <img class="theater-stage-base" src="/static/assets/img/player/completed/stage.svg" alt="">
+            
+            <div class="speech-bubble-layer" id="bubbleLayer"></div>
+
+            <div class="comic-actors-row">
+              <img id="creatorActor" class="creator-phone-img" src="/static/assets/img/player/completed/${cPrefix}-phone.webp" alt="">
+              <img id="playerActor" class="player-confused-img" src="/static/assets/img/player/completed/${pPrefix}-confused.webp" alt="">
+            </div>
+          </div>
+        `;
+
+        // Creator Line 3 (left)
+        playSound('aaapo');
+        showSpeechBubble('left', 'then prove you\'re <span style="color:#f43f5e; font-weight:900;">real</span> friend 😏', () => {
+          setTimeout(() => {
+            // Player Line 4 (right)
+            showSpeechBubble('right', 'just look at my <span style="color:#0284c7; font-weight:900;">score</span> 🫣', () => {
+              setTimeout(() => {
+                // Creator Line 5 (left)
+                showSpeechBubble('left', 'okay... <span style="color:#0284c7; font-weight:900;">let\'s see</span> 👀', () => {
+                  setTimeout(renderScene3_DecisionScoreReveal, 1100);
+                });
+              }, 800);
+            });
+          }, 800);
+        });
+      }
+
+      // Scene 3: Decision & Score Reveal with Hanging Board and Live SVG Counter
+      function renderScene3_DecisionScoreReveal() {
+        playSound('bounce');
+
+        app.innerHTML = `
+          <div class="comic-theater-shell" id="theaterBox">
+            <img class="theater-stage-base" src="/static/assets/img/player/completed/stage.svg" alt="">
+
+            <!-- Hanging Score Board -->
+            <div class="score-board-hanging-box">
+              <img class="score-counter-bg-img" src="/static/assets/img/player/completed/score-counter-bg.svg" alt="">
+              
+              <div class="your-score-tag-wrapper">
+                <img src="/static/assets/img/player/completed/your-score-bg.svg" style="width:100%; display:block;" alt="">
+              </div>
+
+              <div class="svg-score-text-wrapper">
+                <svg class="score-svg-display" viewBox="4 0 430 150" aria-label="Score">
+                  <defs>
+                    <linearGradient id="score-blue-grad" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0" stop-color="#63acff"/>
+                      <stop offset="0.28" stop-color="#3d8bff"/>
+                      <stop offset="0.62" stop-color="#2872ff"/>
+                      <stop offset="1" stop-color="#1d5fe8"/>
+                    </linearGradient>
+                    <linearGradient id="score-ink-grad" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0" stop-color="#56647f"/>
+                      <stop offset="0.36" stop-color="#303d5b"/>
+                      <stop offset="1" stop-color="#14203a"/>
+                    </linearGradient>
+                    <filter id="score-shadow-filter" x="-12%" y="-18%" width="124%" height="145%">
+                      <feDropShadow dx="0" dy="4" stdDeviation="2" flood-color="#4d5568" flood-opacity="0.28"/>
+                    </filter>
+                  </defs>
+                  <g filter="url(#score-shadow-filter)">
+                    <!-- Outer White Shell -->
+                    <g class="svg-text-outer-shell">
+                      <text id="liveScoreNumOuter" x="136" y="126" font-size="138" text-anchor="middle">0</text>
+                      <text x="258" y="123" font-size="109" text-anchor="middle">/</text>
+                      <text x="306" y="124" font-size="112">10</text>
+                    </g>
+                    <!-- Blue Rim -->
+                    <g class="svg-text-blue-rim">
+                      <text id="liveScoreNumBlue" x="136" y="126" font-size="138" text-anchor="middle">0</text>
+                    </g>
+                    <!-- Total Silver Rim -->
+                    <g class="svg-text-silver-rim">
+                      <text x="258" y="123" font-size="109" text-anchor="middle">/</text>
+                      <text x="306" y="124" font-size="112">10</text>
+                    </g>
+                    <!-- Face Gradient -->
+                    <g fill="url(#score-blue-grad)" class="svg-text-face">
+                      <text id="liveScoreNumFace" x="136" y="126" font-size="138" text-anchor="middle">0</text>
+                    </g>
+                    <g fill="url(#score-ink-grad)" class="svg-text-face">
+                      <text x="258" y="123" font-size="109" text-anchor="middle">/</text>
+                      <text x="306" y="124" font-size="112">10</text>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Both actors looking up at the board -->
+            <div class="comic-actors-row">
+              <img class="creator-faceup-img" src="/static/assets/img/player/completed/${cPrefix}-face-up.webp" alt="">
+              <img class="player-faceup-img" src="/static/assets/img/player/completed/${pPrefix}-face-up.webp" alt="">
+            </div>
+          </div>
+        `;
+
+        // Count up score starting after board drops in (1.4s delay)
+        setTimeout(() => {
+          let count = 0;
+          const target = res.score;
+          const elOuter = $('#liveScoreNumOuter');
+          const elBlue = $('#liveScoreNumBlue');
+          const elFace = $('#liveScoreNumFace');
+
+          if (target === 0) {
+            playSound('dunDun');
+            setTimeout(renderScene4_Reaction, 1200);
+            return;
+          }
+
+          const interval = setInterval(() => {
+            count++;
+            const pitch = 1 + (count - 1) * 0.15;
+            playSound('scorePop', { playbackRate: pitch });
+
+            if (elOuter) elOuter.textContent = count;
+            if (elBlue) elBlue.textContent = count;
+            if (elFace) elFace.textContent = count;
+
+            if (count >= target) {
+              clearInterval(interval);
+              setTimeout(() => {
+                playSound('dunDun');
+                setTimeout(renderScene4_Reaction, 1000);
+              }, 400);
+            }
+          }, 180);
+        }, 1400);
+      }
+
+      // Scene 4: Reaction - BOTH CONDITIONS (Good vs Not Good)
+      function renderScene4_Reaction() {
+        if (scoreLevel === 'high') {
+          playSound('resultHigh');
+        } else if (scoreLevel === 'medium') {
+          playSound('resultMedium');
+        } else {
+          playSound('resultLow');
+        }
+
+        const reactionImg = scoreLevel === 'high'
+          ? `${cPrefix}-8.webp`
+          : scoreLevel === 'medium'
+          ? `${cPrefix}-5.webp`
+          : `${cPrefix}-0.webp`;
+
+        const reactionText = scoreLevel === 'high'
+          ? 'you made me <span style="color:#0284c7; font-weight:900;">smile</span> 😆... i\'ll never <span style="color:#f43f5e; font-weight:900;">block you</span> 🙂'
+          : scoreLevel === 'medium'
+          ? 'i won\'t <span style="color:#f43f5e; font-weight:900;">block you</span>... but plz leave me <span style="text-decoration: underline wavy;">alone</span> 😕'
+          : 'bye! bye! … i will <span style="color:#ef4444; font-weight:900;">block you</span>… huh 🤬';
+
+        app.innerHTML = `
+          <div class="comic-theater-shell" id="theaterBox" style="min-height: 500px;">
+            <img class="theater-stage-base" src="/static/assets/img/player/completed/stage.svg" alt="">
+
+            <!-- Score badge staying at top -->
+            <div style="position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 15; background: #ffffff; border: 2.5px solid #0284c7; border-radius: 999px; padding: 4px 20px; font-weight: 900; font-size: 1.1rem; color: #0284c7; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+              Score: ${res.score} / ${res.total}
+            </div>
+
+            <!-- Speech Bubble Layer -->
+            <div class="speech-bubble-layer" id="bubbleLayer"></div>
+
+            <!-- Reaction Actor on Stage -->
+            <div class="comic-actors-row" style="height: 190px; justify-content: center; align-items: flex-end;">
+              ${scoreLevel === 'high' ? `
+                <img class="reaction-walking-good" src="/static/assets/img/player/completed/${reactionImg}" alt="">
+              ` : scoreLevel === 'medium' ? `
+                <img class="reaction-medium-img" src="/static/assets/img/player/completed/${reactionImg}" alt="">
+              ` : `
+                <img class="reaction-walking-bad" src="/static/assets/img/player/completed/${reactionImg}" alt="">
+              `}
+            </div>
+
+            <div id="confettiContainer"></div>
+          </div>
+
+          <!-- Bottom Action Area (cta-bg.svg) -->
+          <div class="cta-theater-card">
+            <div style="font-size: 0.95rem; font-weight: 800; color: #0284c7; margin-bottom: 4px;">
+              ${creatorName}'s reply to ${playerName} 👆
+            </div>
+            <div style="font-size: 1.25rem; font-weight: 900; color: #0f172a; margin-bottom: 14px;">
+              *now, it's your turn*
+            </div>
+
+            <a class="btn-blue-pill cta-button-tada" href="#/" style="margin-bottom: 12px;">
+              ✨ create your own quiz ➔
+            </a>
+
+            <div style="display: flex; gap: 8px; justify-content: center;">
+              <button id="viewQuizAnswersBtn" style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 999px; padding: 8px 18px; font-weight: 800; font-size: 0.85rem; cursor: pointer;">
+                👀 View Answers
+              </button>
+              <button id="shareThisQuizBtn" style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 999px; padding: 8px 18px; font-weight: 800; font-size: 0.85rem; cursor: pointer;">
+                🔗 Share Quiz
+              </button>
+            </div>
+          </div>
+        `;
+
+        // Show typewriter speech bubble
+        showSpeechBubble('left', reactionText);
+
+        // Spawn confetti if Good Performance!
+        if (scoreLevel === 'high') {
+          spawnConfetti();
+        }
+
+        $('#viewQuizAnswersBtn').onclick = () => {
+          showToast(`Your score: ${res.score}/${res.total}!`);
+        };
+        $('#shareThisQuizBtn').onclick = () => {
+          navigator.clipboard.writeText(window.location.href);
+          showToast('Quiz link copied!');
+        };
+      }
+
+      function showSpeechBubble(direction, htmlText, onComplete) {
+        const layer = $('#bubbleLayer');
+        if (!layer) return;
+        const svgBubble = direction === 'left'
+          ? '/static/assets/img/player/completed/speech-bubble-left.svg'
+          : '/static/assets/img/player/completed/speech-bubble-right.svg';
+
+        layer.innerHTML = `
+          <div class="speech-bubble-wrapper ${direction}">
+            <img class="speech-bubble-cloud-img" src="${svgBubble}" alt="">
+            <div class="speech-bubble-text-box">
+              <span id="activeBubbleSpan"></span>
+            </div>
+          </div>
+        `;
+
+        const span = $('#activeBubbleSpan');
+        typeWriter(span, htmlText, 28).then(() => {
+          if (onComplete) onComplete();
+        });
+      }
+
+      function spawnConfetti() {
+        const box = $('#confettiContainer');
+        if (!box) return;
+        const colors = ['#f43f5e', '#3b82f6', '#22c55e', '#eab308', '#a855f7', '#ec4899'];
+        for (let i = 0; i < 40; i++) {
+          const piece = document.createElement('div');
+          piece.className = 'confetti-piece';
+          piece.style.left = Math.random() * 100 + '%';
+          piece.style.top = '-10px';
+          piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          piece.style.animationDelay = Math.random() * 2 + 's';
+          piece.style.animationDuration = 2 + Math.random() * 2 + 's';
+          box.appendChild(piece);
+        }
+      }
+    }
+  },
+
+  // Page 8: Creator Scoreboard
+  async board(id, key) {
+    app.innerHTML = `<div class="quiz-notebook-card" style="text-align:center; padding: 40px;"><h2 style="font-weight:800;">Loading scoreboard... ⏳</h2></div>`;
+    const data = await api(`/api/quizzes/${id}/board?key=${encodeURIComponent(key)}`);
+    const results = [...data.results].sort((a, b) => b.score - a.score);
+    const shareUrl = `${window.location.origin}/#/q/${id}`;
+
+    app.innerHTML = `
+      <div class="quiz-notebook-card">
+        <h1 style="font-size: 1.7rem; font-weight: 900; margin: 0 0 4px; text-align: center;">
+          ${esc(data.name)}'s Scoreboard 👑
+        </h1>
+        <p style="text-align: center; color: #64748b; font-size: 0.95rem; margin: 0 0 16px;">
+          ${results.length} friend${results.length === 1 ? '' : 's'} took your test
+        </p>
+
+        <button id="copyQuizLink" class="btn-blue-pill cta-button-tada" style="margin-bottom: 16px; font-size: 1.05rem; padding: 12px 16px;">
+          📋 Copy Quiz Link to Share
+        </button>
+
+        <h3 style="font-weight: 800; font-size: 1.15rem; margin: 14px 0 10px;">Leaderboard:</h3>
+
+        ${results.length === 0 ? `
+          <div style="text-align: center; padding: 30px 10px; color: #64748b; font-weight: 700;">
+            Nobody has played yet! Share your link to see who your real ones are. 💌
+          </div>
+        ` : results.map((r, i) => {
+          const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`;
+          const isReal = r.score >= Math.ceil(data.questions.length * 0.7);
+          const isFake = r.score < Math.ceil(data.questions.length * 0.4);
+          const tag = isReal ? '💖 Real One' : isFake ? '🚫 Block!' : '🤔 Average';
+          const tagBg = isReal ? '#bbf7d0' : isFake ? '#fecaca' : '#fef08a';
+
+          return `
+            <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 18px; padding: 12px 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-weight: 900; font-size: 1.15rem;">${medal}</span>
+                <b style="font-size: 1.05rem;">${esc(r.player)}</b>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 0.8rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: ${tagBg};">
+                  ${tag}
+                </span>
+                <span style="font-weight: 900; font-size: 1.1rem; color: #0284c7;">
+                  ${r.score}/${data.questions.length}
+                </span>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+
+    $('#copyQuizLink').onclick = async () => {
+      playSound('pop');
+      await navigator.clipboard.writeText(shareUrl);
+      showToast('Quiz link copied!');
+    };
   }
 };
-async function route(){
-  const [,name,...a]=location.hash.slice(1).split('/');
-  try{await (Object.hasOwn(routes,name)?routes[name]:routes.home)(...a)}
-  catch(e){app.innerHTML=`<div class="card">${esc(e.message)} <a href="#/">Back to start</a></div>`}
-  scrollTo(0,0);
+
+async function router() {
+  const hash = location.hash.slice(1) || '/';
+  const parts = hash.split('/').filter(Boolean);
+  const routeName = parts[0] || 'home';
+  const args = parts.slice(1);
+
+  try {
+    if (routes[routeName]) {
+      await routes[routeName](...args);
+    } else {
+      await routes.home();
+    }
+  } catch (err) {
+    app.innerHTML = `
+      <div class="quiz-notebook-card" style="text-align:center; padding: 30px;">
+        <h2 style="color: #ef4444; font-weight: 800;">Error</h2>
+        <p>${esc(err.message)}</p>
+        <a class="btn-blue-pill" href="#/">Back to Home</a>
+      </div>
+    `;
+  }
+  window.scrollTo(0, 0);
 }
-addEventListener('hashchange',route);route();
+
+window.addEventListener('hashchange', router);
+router();
 </script>
 </body>
 </html>

@@ -1,0 +1,189 @@
+[
+  {
+    "id": "13",
+    "question": "What does userName spend most of his money on? 💸",
+    "options": [
+      "Snacks / food 🍔",
+      "Clothes / shoes 👟",
+      "Games 🎮",
+      "Tech / accessories 🎧",
+      "Going out with friends 👫",
+      "Nothing — he saves it 💰"
+    ]
+  },
+  {
+    "id": "42",
+    "question": "What's userName's favorite cartoon? 📺",
+    "options": [
+      "Shinchan 😂",
+      "Doraemon 🤖",
+      "Ninja Hattori 🥷",
+      "Chhota Bheem 💪",
+      "Motu Patlu 🤩",
+      "Oggy and the Cockroaches 😆",
+      "Tom and Jerry 🐱",
+      "Pokémon ⚡",
+      "Ben 10 👽",
+      "SpongeBob SquarePants 🧽",
+      "Naruto 🍥",
+      "Dragon Ball Z 🐉"
+    ]
+  },
+  {
+    "id": "33",
+    "question": "How does userName usually text? 📱",
+    "options": [
+      "Lots of messages in a row 💬",
+      "One long message 📝"
+    ]
+  },
+  {
+    "id": "44",
+    "question": "What was userName's favorite game as a kid? 🛝",
+    "options": [
+      "Gully Cricket 🏏",
+      "Hide-and-seek 🫣",
+      "Tag 🏃",
+      "Football ⚽",
+      "Badminton 🏸",
+      "Ludo 🎲",
+      "Carrom 🎯",
+      "Rock Paper Scissors ✂️"
+    ]
+  },
+  {
+    "id": "460",
+    "question": "What’s userName’s go-to sweet or tangy treat? 🍬",
+    "options": [
+      "Pulse Kachcha Aam 🥭",
+      "Mango Bite 🟡",
+      "Melody 🍫",
+      "Alpenliebe Gold 🍮",
+      "Alpenliebe Juzt Jelly Strawberry 🍓",
+      "Poppins 🌈",
+      "Boomer bubble gum 🫧",
+      "Dairy Milk Chocolate 🍫",
+      "KitKat Chocolate 🍫",
+      "Center Fresh 🫧"
+    ]
+  },
+  {
+    "id": "16",
+    "question": "Where did userName usually sit in class? 🏫",
+    "options": [
+      "Front 🥇",
+      "Back 😎"
+    ]
+  },
+  {
+    "id": "458",
+    "question": "What is userName most scared of? 😨",
+    "options": [
+      "Injections 💉",
+      "Roller coasters 🎢"
+    ]
+  },
+  {
+    "id": "37",
+    "question": "Which dessert would userName pick? 🍰",
+    "options": [
+      "Gulab Jamun 🍮",
+      "Jalebi 🍥",
+      "Rasmalai 🍨",
+      "Kulfi 🍧",
+      "Falooda 🍨",
+      "Choco Lava Cake 🍫",
+      "Chocolate Pastry 🍰",
+      "Brownie 🍪",
+      "Ice Cream Sundae 🍨",
+      "Gajar Ka Halwa 🍮"
+    ]
+  },
+  {
+    "id": "23",
+    "question": "When did userName usually study for exams? 📝",
+    "options": [
+      "Days in advance 📚",
+      "The night before 🌙",
+      "5 minutes before 😭",
+      "Didn't study 💀"
+    ]
+  },
+  {
+    "id": "35",
+    "question": "What's userName's favorite fast food? 🍔",
+    "options": [
+      "Burger 🍔",
+      "Pizza 🍕",
+      "Momos 🥟",
+      "Pani Puri 😋",
+      "Samosa 🥟",
+      "Vada Pav 🌭",
+      "Masala Maggi 🍜",
+      "Chow mein 🍝",
+      "Manchurian 🥡",
+      "Pav Bhaji 🍛",
+      "Kathi Roll 🌯",
+      "Biryani 🍲"
+    ]
+  },
+  {
+    "id": "17",
+    "question": "What position does userName usually sleep in? 💤",
+    "options": [
+      "On his side 😴",
+      "On his stomach 🛏️",
+      "On his back 😌"
+    ]
+  },
+  {
+    "id": "29",
+    "question": "How does userName usually wear a backpack? 🎒",
+    "options": [
+      "Both straps 🎒",
+      "One strap 😎"
+    ]
+  },
+  {
+    "id": "25",
+    "question": "What does userName do with the pizza crust? 🍕",
+    "options": [
+      "Eats it 😋",
+      "Leaves it 🙅"
+    ]
+  },
+  {
+    "id": "19",
+    "question": "How many alarms does userName need to wake up? ⏰",
+    "options": [
+      "Just one ⏰",
+      "2–3 alarms ⏰",
+      "Keeps hitting snooze 💤",
+      "Doesn’t need one 😎"
+    ]
+  },
+  {
+    "id": "21",
+    "question": "How fast does userName usually eat? 🍽️",
+    "options": [
+      "Super fast ⚡",
+      "Really slow 🐢"
+    ]
+  },
+  {
+    "id": "27",
+    "question": "How much ketchup does userName use? 🥫",
+    "options": [
+      "None 🚫",
+      "Loads of ketchup 🍅"
+    ]
+  },
+  {
+    "id": "31",
+    "question": "How much spice can userName handle? 🌶️",
+    "options": [
+      "No spice 😌",
+      "Pretty spicy 🔥"
+    ]
+  }
+]
