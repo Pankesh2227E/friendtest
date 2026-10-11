@@ -5,10 +5,13 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "build": "echo \"Build complete\""
+    "build": "echo \"Build complete\"",
+    "lint": "node -c server.js"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "mongodb": "^7.7.0"
   }
 }
-
