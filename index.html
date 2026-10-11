@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffd23f">
+<meta name="description" content="Make a quiz about yourself, share the link, and see which friends really know you.">
+<title>RealOnes: who really knows you?</title>
+<style>
+:root{--ink:#231942;--paper:#f7f5ff;--lemon:#ffd23f;--mint:#7ae7c7;--lilac:#b8a4f5;--bad:#c2255c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.5 system-ui,sans-serif}
+main{max-width:520px;margin:0 auto;padding:18px 16px 64px}
+h1{font:800 clamp(1.9rem,8vw,2.6rem)/1.05 ui-rounded,"Arial Rounded MT Bold","Avenir Next",system-ui,sans-serif;margin:.6em 0 .3em}
+a{color:inherit}
+.logo{display:inline-flex;align-items:center;gap:8px;font:800 1.25rem ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;text-decoration:none}
+.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding:14px;margin:16px 0}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+button,input{font:inherit;color:inherit}
+input{width:100%;padding:12px;border:2px solid var(--ink);border-radius:10px;background:#fff}
+.opt{padding:10px;border:2px solid var(--ink);border-radius:10px;background:#fff;cursor:pointer;text-align:left}
+.opt.on{background:var(--mint);font-weight:700}
+.btn{display:block;width:100%;padding:14px;margin-top:18px;border:2px solid var(--ink);border-radius:12px;background:var(--lemon);box-shadow:4px 4px 0 var(--ink);font-weight:800;text-align:center;text-decoration:none;cursor:pointer}
+.btn:disabled{opacity:.45;box-shadow:none;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--lilac);outline-offset:2px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-top:1px dashed #23194255}
+.ok{color:#0b7a5f}.no{color:var(--bad)}.muted{opacity:.7;font-size:.9rem}
+summary{cursor:pointer}
+</style>
+</head>
+<body>
+<main>
+<a class="logo" href="#/"><svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3c11 0 17 8 17 18s-7 16-17 16S3 31 3 21 9 3 20 3z" fill="#ffd23f" stroke="#231942" stroke-width="2.5"/><circle cx="14" cy="19" r="2.6" fill="#231942"/><circle cx="26" cy="19" r="2.6" fill="#231942"/><path d="M14 27q6 5 12 0" stroke="#231942" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>RealOnes</a>
+<div id="app"></div>
+</main>
+<script>
+const Q=[
+["My ideal weekend is…","Sleeping in","Out with friends","Binge-watching","Exploring somewhere new"],
+["My comfort food is…","Pizza","Noodles","Ice cream","Fries"],
+["My biggest pet peeve is…","Loud chewing","People who are late","Spoilers","Being left on read"],
+["If I won the lottery, I’d first…","Travel the world","Buy a house","Invest it","Treat everyone"],
+["The app I use most is…","Music","Camera","Chat","Videos"],
+["My friends would call me…","The planner","The funny one","The listener","The wildcard"]];
+const $=s=>document.querySelector(s),app=$('#app');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function api(p,o){
+  const r=await fetch('/api/quizzes'+p,o&&{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)});
+  const d=await r.json();
+  if(!r.ok)throw new Error(d.error||'Something went wrong.');
+  return d;
+}
+const form=()=>Q.map((q,i)=>`<div class="card"><b>${i+1}. ${q[0]}</b><div class="opts">${q.slice(1).map((o,j)=>`<button class="opt" data-q="${i}" data-o="${j}">${o}</button>`).join('')}</div></div>`).join('');
+const rows=(ans,g)=>Q.map((q,i)=>`<div class="row"><span>${q[0]}</span><b class="${g[i]===ans[i]?'ok':'no'}">${q[g[i]+1]}${g[i]===ans[i]?' ✓':' ✗ (was '+q[ans[i]+1]+')'}</b></div>`).join('');
+function wire(go){
+  const a=Array(Q.length).fill(-1),n=$('#name'),b=$('#go');
+  const upd=()=>{b.disabled=!n.value.trim()||a.includes(-1)};
+  n.oninput=upd;
+  app.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+    const i=+o.dataset.q;a[i]=+o.dataset.o;
+    app.querySelectorAll('[data-q="'+i+'"]').forEach(x=>x.classList.toggle('on',x===o));
+    upd();
+  });
+  upd();
+  b.onclick=async()=>{b.disabled=true;try{await go(n.value.trim(),a)}catch(e){alert(e.message);upd()}};
+}
+const routes={
+  home(){
+    app.innerHTML=`<h1>Who really knows you?</h1><p>Answer 6 questions about yourself, share your link, and see which friends get you right.</p><input id="name" maxlength="24" placeholder="Your name" aria-label="Your name">${form()}<button id="go" class="btn">Create my quiz</button>`;
+    wire(async(name,answers)=>{const r=await api('',{name,answers});location.hash=`#/share/${r.id}/${r.key}`});
+  },
+  share(id,key){
+    const link=`${location.origin}/#/q/${id}`;
+    app.innerHTML=`<h1>Your quiz is live</h1><div class="card"><p class="muted">Send this link to your friends:</p><input id="l" readonly value="${link}" aria-label="Quiz link"><button id="c" class="btn">Copy link</button></div><a class="btn" href="#/board/${id}/${key}">Open my scoreboard</a><p class="muted">Bookmark your scoreboard page. It's the only way back to your results.</p>`;
+    $('#c').onclick=async()=>{try{navigator.share?await navigator.share({title:'RealOnes',url:link}):await navigator.clipboard.writeText(link)}catch{}$('#l').select()};
+  },
+  async q(id){
+    const {name}=await api('/'+id);
+    app.innerHTML=`<h1>How well do you know ${esc(name)}?</h1><input id="name" maxlength="24" placeholder="Your name" aria-label="Your name">${form()}<button id="go" class="btn">See my score</button>`;
+    wire(async(player,guesses)=>{
+      const r=await api(`/${id}/play`,{player,guesses});
+      app.innerHTML=`<h1>${r.score}/${r.total}</h1><p>${r.score>=5?'You’re a real one!':r.score>=3?'Not bad. You know the basics.':'Time to catch up on '+esc(name)+'.'}</p><div class="card">${rows(r.answers,guesses)}</div><a class="btn" href="#/">Make my own quiz</a>`;
+    });
+  },
+  async board(id,key){
+    const d=await api(`/${id}/board?key=${encodeURIComponent(key)}`),r=[...d.results].sort((a,b)=>b.score-a.score);
+    app.innerHTML=`<h1>${esc(d.name)}'s scoreboard</h1><p class="muted">${r.length} ${r.length==1?'friend has':'friends have'} played. <a href="#/q/${id}">Quiz link</a></p>`+(r.length?r.map((p,i)=>`<details class="card"><summary><b>${i+1}. ${esc(p.player)}</b>, ${p.score}/${Q.length} <span class="muted">${p.score>=5?'Real one':p.score<=1?'Barely knows you':''}</span></summary>${rows(d.answers,p.guesses)}</details>`).join(''):'<div class="card">Nobody has played yet. Share your quiz link to get started.</div>');
+  }
+};
+async function route(){
+  const [,name,...a]=location.hash.slice(1).split('/');
+  try{await (Object.hasOwn(routes,name)?routes[name]:routes.home)(...a)}
+  catch(e){app.innerHTML=`<div class="card">${esc(e.message)} <a href="#/">Back to start</a></div>`}
+  scrollTo(0,0);
+}
+addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>
