@@ -48,10 +48,13 @@ const handle = async (req, res) => {
     }
   }
   if (p.startsWith('/api/')) return send(res, 404, { error: 'Not found' });
-  fs.readFile(path.join(__dirname, 'public', 'index.html'), (e, d) => {
+  
+  // FIX: Look for index.html directly in __dirname instead of __dirname/public
+  fs.readFile(path.join(__dirname, 'index.html'), (e, d) => {
     res.writeHead(e ? 500 : 200, { 'Content-Type': 'text/html; charset=utf-8' });
     res.end(e ? 'Server error' : d);
   });
 };
 http.createServer((req, res) => handle(req, res).catch(() => res.headersSent || send(res, 500, { error: 'Server error' })))
   .listen(PORT, () => console.log('RealOnes on :' + PORT));
+
