@@ -2,6 +2,10 @@ services:
   - type: web
     name: realones
     runtime: node
+    plan: free
     buildCommand: npm install
     startCommand: npm start
-    plan: free
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+
