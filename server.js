@@ -164,6 +164,7 @@ const handle = async (req, res) => {
         name: q.name,
         gender: q.gender,
         questions: q.questions,
+        answers: q.answers,
         total: q.questions.length
       });
     }

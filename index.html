@@ -53,42 +53,6 @@ body {
   100% { transform: translateY(4px) translateX(-6px); }
 }
 
-/* Top Creator Credit throughout the page - NO white box, just clean text */
-.top-creator-banner {
-  width: 100%;
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  color: #0f172a;
-  text-align: center;
-  padding: 10px 14px 4px;
-  font-size: 0.95rem;
-  font-weight: 800;
-  letter-spacing: 0.3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  position: relative;
-  z-index: 100;
-  pointer-events: none;
-  user-select: none;
-  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.7);
-}
-.top-creator-banner .heart-pulse {
-  display: inline-block;
-  animation: heartBeat 1.4s ease-in-out infinite;
-}
-@keyframes heartBeat {
-  0%, 100% { transform: scale(1); }
-  25% { transform: scale(1.22); }
-  40% { transform: scale(1); }
-  60% { transform: scale(1.18); }
-}
-
 header {
   position: relative;
   z-index: 20;
@@ -452,10 +416,33 @@ main {
   background: #f0fdf4;
   box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
 }
+.player-option-tile.wrong-pick {
+  border-color: #ef4444;
+  background: #fef2f2;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+  animation: tileShake 0.35s ease-in-out;
+}
+@keyframes tileShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
 .check-overlay {
   position: absolute;
   inset: 0;
   background: rgba(34, 197, 94, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: zoomBounce 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 14px;
+}
+.wrong-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(239, 68, 68, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -528,6 +515,128 @@ main {
 .btn-blue-pill:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+/* Dedicated Share Screen Styles */
+.share-url-container {
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  border-radius: 18px;
+  padding: 10px 14px;
+  margin: 12px 0 10px;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.share-url-container:hover {
+  border-color: #0284c7;
+  background: #f0f9ff;
+}
+.share-url-container input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #334155;
+  outline: none;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn-copy-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 20px;
+  background: #fde047;
+  color: #0f172a;
+  border: 2.5px solid #eab308;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1.15rem;
+  font-weight: 900;
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.35);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.1s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  user-select: none;
+  margin-bottom: 12px;
+}
+.btn-copy-pill:active {
+  transform: translateY(2px) scale(0.98);
+}
+.btn-whatsapp-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 20px;
+  background: #25D366;
+  color: #ffffff;
+  border: 2px solid #1fa851;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1.15rem;
+  font-weight: 800;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.1s, background-color 0.15s;
+  user-select: none;
+  margin-bottom: 14px;
+}
+.btn-whatsapp-pill:active {
+  transform: translateY(2px) scale(0.98);
+}
+.social-share-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+  width: 100%;
+}
+.social-pill-btn {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.1s, border-color 0.15s, background-color 0.15s;
+  user-select: none;
+}
+.social-pill-btn:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+}
+.social-pill-btn:active {
+  transform: scale(0.96);
+}
+.social-icon-svg {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: block;
 }
 
 /* Polaroid gender selector */
@@ -919,10 +1028,6 @@ main {
 </style>
 </head>
 <body>
-
-<div class="top-creator-banner">
-  <span>made by Pankesh</span> <span class="heart-pulse">💗</span>
-</div>
 
 <img class="bg-cloud bg-cloud-1" src="/static/assets/img/user/home/clouds.webp" alt="">
 <img class="bg-cloud bg-cloud-2" src="/static/assets/img/user/home/clouds.webp" alt="">
@@ -1353,21 +1458,77 @@ const routes = {
           find your <span style="color: var(--pink);">fake</span> friends 🎭
         </h1>
 
-        <div style="display: flex; align-items: center; background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 16px; padding: 6px 8px; margin: 12px 0 14px;">
-          <span style="font-size: 1.1rem; margin-right: 4px;">🔗</span>
-          <input id="shareInput" style="flex: 1; border: none; background: transparent; font-family: inherit; font-size: 0.95rem; font-weight: 700; color: #334155; outline: none;" readonly value="${shareUrl}">
-          <button id="copyShareBtn" style="background: var(--yellow); border: 1.5px solid #eab308; border-radius: 12px; padding: 8px 16px; font-weight: 800; font-size: 0.9rem; cursor: pointer;">Copy</button>
+        <!-- Link Display Box (ellipsized & click-to-copy) -->
+        <div class="share-url-container" id="shareInputBox" title="Click to copy quiz link">
+          <span style="font-size: 1.2rem; flex-shrink: 0;">🔗</span>
+          <input id="shareInput" readonly value="${shareUrl}" aria-label="Quiz Link">
         </div>
 
-        <button id="whatsappBtn" class="btn-blue-pill" style="background: #25d366; margin-bottom: 12px;">
-          💬 Share on WhatsApp
+        <!-- Separate Dedicated Copy Link Button -->
+        <button id="copyShareBtn" class="btn-copy-pill">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span id="copyBtnText">Copy Quiz Link</span>
         </button>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px;">
-          <div class="polaroid-card" style="padding: 10px;" onclick="navigator.clipboard && navigator.clipboard.writeText('${shareUrl}'); showToast('Instagram caption copied!');">📸 Instagram</div>
-          <div class="polaroid-card" style="padding: 10px;" onclick="navigator.clipboard && navigator.clipboard.writeText('${shareUrl}'); showToast('Snapchat link copied!');">👻 Snapchat</div>
-          <div class="polaroid-card" style="padding: 10px;" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('${shareUrl}'), '_blank')">📘 Facebook</div>
-          <div class="polaroid-card" style="padding: 10px;" onclick="window.open('https://t.me/share/url?url=' + encodeURIComponent('${shareUrl}'), '_blank')">✈️ Telegram</div>
+        <!-- WhatsApp Button with Real WhatsApp Icon -->
+        <button id="whatsappBtn" class="btn-whatsapp-pill">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" style="flex-shrink:0;">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.78 14.28c-.24.67-1.39 1.28-1.94 1.36-.49.07-1.12.1-1.8-.12-.42-.13-.95-.31-1.63-.61-2.88-1.25-4.76-4.14-4.9-4.33-.15-.2-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.26-.29.57-.36.76-.36h.55c.18 0 .42.07.65.62.24.57.81 1.98.88 2.12.07.15.12.32.02.51-.1.2-.15.31-.29.48-.15.17-.31.37-.44.5-.15.15-.3.3-.13.6.17.29.75 1.24 1.6 2 .99.89 1.82 1.16 2.08 1.29.26.13.41.11.56-.06.15-.17.65-.76.82-1.02.17-.26.35-.22.59-.13.24.09 1.52.72 1.78.85.26.13.44.2.5.31.06.1.06.69-.18 1.36z"/>
+          </svg>
+          <span>Share on WhatsApp</span>
+        </button>
+
+        <!-- Social Share Grid with Real Brand SVG Icons -->
+        <div class="social-share-grid">
+          <!-- Real Instagram Icon -->
+          <button class="social-pill-btn" id="shareInstagramBtn" type="button">
+            <svg class="social-icon-svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <defs>
+                <radialGradient id="igGrad" cx="30%" cy="107%" r="150%">
+                  <stop offset="0%" stop-color="#ffd600"/>
+                  <stop offset="10%" stop-color="#ff7a00"/>
+                  <stop offset="50%" stop-color="#ff0069"/>
+                  <stop offset="70%" stop-color="#d300c5"/>
+                  <stop offset="100%" stop-color="#7638fa"/>
+                </radialGradient>
+              </defs>
+              <rect x="1" y="1" width="22" height="22" rx="6" fill="url(#igGrad)"/>
+              <rect x="5.5" y="5.5" width="13" height="13" rx="3.5" stroke="#ffffff" stroke-width="1.8" fill="none"/>
+              <circle cx="12" cy="12" r="3.2" stroke="#ffffff" stroke-width="1.8" fill="none"/>
+              <circle cx="15.8" cy="8.2" r="0.9" fill="#ffffff"/>
+            </svg>
+            <span>Instagram</span>
+          </button>
+
+          <!-- Real Snapchat Icon -->
+          <button class="social-pill-btn" id="shareSnapchatBtn" type="button">
+            <svg class="social-icon-svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect width="24" height="24" rx="6" fill="#FFFC00"/>
+              <path d="M12.02 5.25c-2.4 0-4.05 1.77-4.05 3.96 0 .42.06.87.18 1.34-.33.15-.75.39-.75.78 0 .45.45.6 1.05.69.09.45.24.87.48 1.23-.72.24-1.68.66-1.68 1.5 0 .93 1.23 1.08 2.01 1.02.39.54.96.93 1.65 1.05-.51.36-1.29.69-2.22.84-.42.06-.57.36-.3.6.87.75 2.19.87 3.63.87s2.76-.12 3.63-.87c.27-.24.12-.54-.3-.6-.93-.15-1.71-.48-2.22-.84.69-.12 1.26-.51 1.65-1.05.78.06 2.01-.09 2.01-1.02 0-.84-.96-1.26-1.68-1.5.24-.36.39-.78.48-1.23.6-.09 1.05-.24 1.05-.69 0-.39-.42-.63-.75-.78.12-.47.18-.92.18-1.34 0-2.19-1.65-3.96-4.05-3.96z" fill="#ffffff" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"/>
+            </svg>
+            <span>Snapchat</span>
+          </button>
+
+          <!-- Real Facebook Icon -->
+          <button class="social-pill-btn" id="shareFacebookBtn" type="button">
+            <svg class="social-icon-svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="12" fill="#1877F2"/>
+              <path d="M13.5 8H15V5.5h-2c-2 0-3 1.2-3 3.2V11H8v2.5h2V20h3v-6.5h2.2l.3-2.5H13V9c0-.7.3-1 .5-1z" fill="#ffffff"/>
+            </svg>
+            <span>Facebook</span>
+          </button>
+
+          <!-- Real Telegram Icon -->
+          <button class="social-pill-btn" id="shareTelegramBtn" type="button">
+            <svg class="social-icon-svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="12" fill="#24A1DE"/>
+              <path d="M6.8 11.9l8.6-3.6c.7-.3 1.3.1 1.1.9l-1.5 7c-.1.5-.4.6-.9.4l-2.4-1.8-1.2 1.1c-.1.1-.3.3-.5.3l.2-2.6 4.7-4.2c.2-.2 0-.3-.3-.1l-5.8 3.7-2.5-.8c-.6-.2-.6-.6.2-.9z" fill="#ffffff"/>
+            </svg>
+            <span>Telegram</span>
+          </button>
         </div>
 
         <a class="btn-blue-pill" href="#/board/${id}/${key}">
@@ -1376,18 +1537,64 @@ const routes = {
       </div>
     `;
 
-    $('#copyShareBtn').onclick = async () => {
+    const copyAction = async () => {
       playSound('pop');
-      await navigator.clipboard.writeText(shareUrl);
-      $('#copyShareBtn').textContent = '✓ Copied!';
-      $('#copyShareBtn').style.background = '#86efac';
-      showToast('Copied to clipboard! 📋');
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+      } catch (err) {
+        const inp = $('#shareInput');
+        if (inp) {
+          inp.select();
+          document.execCommand('copy');
+        }
+      }
+      const copyBtn = $('#copyShareBtn');
+      const copyBtnText = $('#copyBtnText');
+      if (copyBtnText) copyBtnText.textContent = '✓ Link Copied!';
+      if (copyBtn) {
+        copyBtn.style.background = '#86efac';
+        copyBtn.style.borderColor = '#22c55e';
+      }
+      showToast('Quiz link copied! 📋');
+      setTimeout(() => {
+        if (copyBtnText) copyBtnText.textContent = 'Copy Quiz Link';
+        if (copyBtn) {
+          copyBtn.style.background = '#fde047';
+          copyBtn.style.borderColor = '#eab308';
+        }
+      }, 2500);
     };
+
+    $('#copyShareBtn').onclick = copyAction;
+    $('#shareInputBox').onclick = copyAction;
 
     $('#whatsappBtn').onclick = () => {
       playSound('pop');
       const text = encodeURIComponent(`Find out if you're a REAL ONE or a FAKE FRIEND! Take my quiz here: ${shareUrl}`);
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    };
+
+    $('#shareInstagramBtn').onclick = async () => {
+      playSound('pop');
+      try { await navigator.clipboard.writeText(shareUrl); } catch (e) {}
+      showToast('Instagram link copied! Share to Story or Bio 📸');
+    };
+
+    $('#shareSnapchatBtn').onclick = async () => {
+      playSound('pop');
+      try { await navigator.clipboard.writeText(shareUrl); } catch (e) {}
+      showToast('Snapchat link copied! Paste into your Snap 👻');
+    };
+
+    $('#shareFacebookBtn').onclick = () => {
+      playSound('pop');
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
+    };
+
+    $('#shareTelegramBtn').onclick = () => {
+      playSound('pop');
+      const text = encodeURIComponent(`Find out if you're a REAL ONE or a FAKE FRIEND! Take my quiz here: ${shareUrl}`);
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${text}`, '_blank');
     };
   },
 
@@ -1502,7 +1709,7 @@ const routes = {
               let content = i + 1;
               if (status === true) { cls = 'correct'; content = '✓'; }
               else if (status === false) { cls = 'wrong'; content = '✗'; }
-              return `<div class="num-box ${cls}">${content}</div>`;
+              return `<div class="num-box ${cls}" id="numBox-${i}">${content}</div>`;
             }).join('')}
           </div>
 
@@ -1547,22 +1754,70 @@ const routes = {
             const opt = +tile.dataset.opt;
             guesses[currentIndex] = opt;
 
-            playSound('pop');
+            const correctOpt = (quiz.answers && quiz.answers[currentIndex] !== undefined)
+              ? quiz.answers[currentIndex]
+              : null;
+            const isCorrect = (correctOpt !== null && correctOpt !== undefined)
+              ? (opt === correctOpt)
+              : false;
 
-            // Show check overlay with bounce
-            const overlay = $(`#overlay-${opt}`);
-            overlay.innerHTML = `
-              <div class="check-overlay">
-                <div class="overlay-icon-circle" style="background:#22c55e;">✓</div>
-              </div>
-            `;
-            tile.classList.add('correct-pick');
+            isCorrectList[currentIndex] = isCorrect;
 
-            // Wait 400ms then slide out smoothly to next
+            // Immediately update the current number box in the top bar
+            const curNumBox = document.getElementById(`numBox-${currentIndex}`);
+            if (curNumBox) {
+              curNumBox.className = `num-box ${isCorrect ? 'correct' : 'wrong'}`;
+              curNumBox.textContent = isCorrect ? '✓' : '✗';
+            }
+
+            if (isCorrect) {
+              playSound('pop');
+              tile.classList.add('correct-pick');
+              const overlay = $(`#overlay-${opt}`);
+              if (overlay) {
+                overlay.innerHTML = `
+                  <div class="check-overlay">
+                    <div class="overlay-icon-circle" style="background:#22c55e;">✓</div>
+                  </div>
+                `;
+              }
+            } else {
+              playSound('huh');
+              tile.classList.add('wrong-pick');
+              const overlay = $(`#overlay-${opt}`);
+              if (overlay) {
+                overlay.innerHTML = `
+                  <div class="wrong-overlay">
+                    <div class="overlay-icon-circle" style="background:#ef4444;">✗</div>
+                  </div>
+                `;
+              }
+
+              // Also reveal the creator's true answer with a green checkmark
+              if (correctOpt !== null && correctOpt !== undefined) {
+                const correctTile = app.querySelector(`.player-option-tile[data-opt="${correctOpt}"]`);
+                if (correctTile) {
+                  correctTile.classList.add('correct-pick');
+                  const correctOverlay = $(`#overlay-${correctOpt}`);
+                  if (correctOverlay) {
+                    correctOverlay.innerHTML = `
+                      <div class="check-overlay">
+                        <div class="overlay-icon-circle" style="background:#22c55e;">✓</div>
+                      </div>
+                    `;
+                  }
+                }
+              }
+            }
+
+            // Wait brief moment so user sees the result, then smoothly slide out to next
+            const delay = isCorrect ? 450 : 700;
             setTimeout(() => {
               const slider = $('#playSlider');
-              slider.classList.remove('slide-in');
-              slider.classList.add('slide-out');
+              if (slider) {
+                slider.classList.remove('slide-in');
+                slider.classList.add('slide-out');
+              }
 
               setTimeout(() => {
                 if (currentIndex < quiz.questions.length - 1) {
@@ -1573,7 +1828,7 @@ const routes = {
                   submitFinalPlayGuesses();
                 }
               }, 250);
-            }, 400);
+            }, delay);
           };
         });
       }
