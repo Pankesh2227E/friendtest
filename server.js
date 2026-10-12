@@ -12,11 +12,29 @@ const STATIC_DIR = path.join(__dirname, 'static');
 fs.mkdirSync(DIR, { recursive: true });
 fs.mkdirSync(STATIC_DIR, { recursive: true });
 
-// Local cache and persistence fallback
-let db = {};
-try { db = JSON.parse(fs.readFileSync(FILE, 'utf8')); } catch {}
+// Local cache and persistence fallback (prototype safe)
+let db = Object.create(null);
+try {
+  if (fs.existsSync(FILE)) {
+    const raw = fs.readFileSync(FILE, 'utf8');
+    const parsed = JSON.parse(raw);
+    Object.assign(db, parsed);
+  }
+} catch (e) {
+  console.warn('[Storage] Notice loading initial db.json:', e.message);
+}
+
+let saveTimer = null;
 const save = () => {
-  try { fs.writeFileSync(FILE, JSON.stringify(db, null, 2)); } catch (e) { console.error('Save error:', e); }
+  if (saveTimer) return;
+  saveTimer = setTimeout(async () => {
+    saveTimer = null;
+    try {
+      await fs.promises.writeFile(FILE, JSON.stringify(db, null, 2), 'utf8');
+    } catch (e) {
+      console.error('[Storage] Local backup note:', e.message);
+    }
+  }, 1000);
 };
 
 // MongoDB Atlas Integration
@@ -49,8 +67,10 @@ async function initMongo() {
       const cursor = quizzesCollection.find({});
       let count = 0;
       for await (const doc of cursor) {
-        db[doc.id] = doc;
-        count++;
+        if (doc && doc.id) {
+          db[doc.id] = doc;
+          count++;
+        }
       }
       console.log(`[Database] Synced ${count} quiz(zes) from MongoDB Atlas.`);
     } catch (syncErr) {
@@ -129,9 +149,50 @@ try {
 
 const rid = n => crypto.randomBytes(n).toString('base64url').replace(/[-_]/g, 'a').slice(0, n);
 const clean = s => String(s || '').trim().slice(0, 32);
+
+// Standard security headers
+const setSecurityHeaders = (res) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+};
+
 const send = (res, code, obj) => {
-  res.writeHead(code, { 'Content-Type': 'application/json' });
+  setSecurityHeaders(res);
+  res.writeHead(code, { 'Content-Type': 'application/json; charset=utf-8' });
   res.end(JSON.stringify(obj));
+};
+
+// Rate limiter (in-memory token bucket)
+const rateLimits = new Map();
+const isRateLimited = (ip, action, limit, windowMs) => {
+  const key = `${action}:${ip}`;
+  const now = Date.now();
+  const entry = rateLimits.get(key);
+  if (!entry || now - entry.start > windowMs) {
+    rateLimits.set(key, { start: now, count: 1 });
+    return false;
+  }
+  if (entry.count >= limit) {
+    return true;
+  }
+  entry.count++;
+  return false;
+};
+
+// Garbage collect rate limit entries every 10 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [k, v] of rateLimits.entries()) {
+    if (now - v.start > 3600000) rateLimits.delete(k);
+  }
+}, 600000).unref();
+
+const getClientIp = (req) => {
+  const fwd = req.headers['x-forwarded-for'];
+  if (fwd) return fwd.split(',')[0].trim();
+  return req.socket.remoteAddress || 'unknown';
 };
 
 const MIME_MAP = {
@@ -158,10 +219,20 @@ const body = req => new Promise(r => {
   req.on('close', () => r({}));
 });
 
-// Completely local static assets server
+// Secure static assets server with strict path traversal prevention
 const handleAsset = (req, res, pathname) => {
-  const relPath = pathname.replace(/^\/+/, ''); // remove leading slash
-  const localFile = path.join(__dirname, relPath);
+  setSecurityHeaders(res);
+  // Sanitize path against directory traversal
+  const safePath = path.normalize(pathname).replace(/^(\.\.[\/\\])+/, '');
+  const relPath = safePath.replace(/^\/+/, '');
+  const localFile = path.resolve(__dirname, relPath);
+
+  // Boundary check: File MUST stay strictly inside STATIC_DIR
+  if (!localFile.startsWith(STATIC_DIR + path.sep) && localFile !== STATIC_DIR) {
+    res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+    return res.end('Access denied');
+  }
+
   const ext = path.extname(localFile).toLowerCase();
   const mime = MIME_MAP[ext] || 'application/octet-stream';
 
@@ -174,16 +245,17 @@ const handleAsset = (req, res, pathname) => {
       });
       return res.end(data);
     } catch (e) {
-      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
       return res.end('Read error');
     }
   }
 
-  res.writeHead(404, { 'Content-Type': 'text/plain' });
+  res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
   res.end('Asset not found');
 };
 
 const handle = async (req, res) => {
+  setSecurityHeaders(res);
   const u = new URL(req.url, 'http://x');
   const p = u.pathname;
   const m = req.method;
@@ -193,10 +265,12 @@ const handle = async (req, res) => {
     return handleAsset(req, res, p);
   }
 
-  // Favicon and icon image routes
-  if (p === '/favicon.ico' || p === '/favicon.svg' || p === '/bears.png' || p === '/favicon-32.png' || p === '/favicon-192.png' || p === '/favicon-512.png') {
-    const file = path.join(__dirname, p === '/bears.png' ? 'bears.png' : (p.startsWith('/favicon') ? p.slice(1) : p.slice(1)));
-    if (fs.existsSync(file)) {
+  // Favicon, Mascot and Social OpenGraph image routes
+  if (p === '/favicon.ico' || p === '/favicon.svg' || p === '/bears.png' || p === '/characters_first_frame.png' || p === '/favicon-32.png' || p === '/favicon-192.png' || p === '/favicon-512.png') {
+    const fileName = p.slice(1);
+    const file = path.resolve(__dirname, fileName);
+    // Boundary check: file must be in root directory
+    if (file.startsWith(__dirname + path.sep) && fs.existsSync(file)) {
       const ext = path.extname(file).toLowerCase();
       res.writeHead(200, {
         'Content-Type': MIME_MAP[ext] || 'application/octet-stream',
@@ -213,8 +287,13 @@ const handle = async (req, res) => {
     });
   }
 
-  // API: Create new quiz
+  // API: Create new quiz (Rate-limited: 25 quizzes / hr per IP)
   if (p === '/api/quizzes' && m === 'POST') {
+    const ip = getClientIp(req);
+    if (isRateLimited(ip, 'create_quiz', 25, 3600000)) {
+      return send(res, 429, { error: 'You are creating quizzes too quickly. Please wait a bit.' });
+    }
+
     const b = await body(req);
     const name = clean(b.name);
     const gender = b.gender === 'male' ? 'male' : 'female';
@@ -247,20 +326,29 @@ const handle = async (req, res) => {
     const q = await getQuiz(x[1]);
     if (!q) return send(res, 404, { error: 'This quiz does not exist or was deleted.' });
 
-    // Public quiz metadata (for player)
+    // Public quiz metadata (for player taking quiz)
+    // IMPORTANT FIX: Never expose creator's answers to the player before they play!
     if (!x[2] && m === 'GET') {
       return send(res, 200, {
         id: q.id,
         name: q.name,
         gender: q.gender,
-        questions: q.questions,
-        answers: q.answers,
+        questions: q.questions.map(item => ({
+          id: item.id,
+          question: item.question,
+          options: item.options
+        })),
         total: q.questions.length
       });
     }
 
-    // Play quiz
+    // Play quiz (Rate-limited: 60 plays / 10 min per IP)
     if (x[2] === '/play' && m === 'POST') {
+      const ip = getClientIp(req);
+      if (isRateLimited(ip, 'play_quiz', 60, 600000)) {
+        return send(res, 429, { error: 'Too many submissions. Please slow down.' });
+      }
+
       const b = await body(req);
       const player = clean(b.player);
       const guesses = Array.isArray(b.guesses) ? b.guesses : [];
@@ -306,7 +394,7 @@ const handle = async (req, res) => {
       });
     }
 
-    // Scoreboard for creator
+    // Scoreboard for creator (Protected by secret creator key)
     if (x[2] === '/board' && m === 'GET') {
       const authKey = u.searchParams.get('key');
       if (authKey !== q.key) {
@@ -323,8 +411,13 @@ const handle = async (req, res) => {
     }
   }
 
-  // API: Contact Us submission
+  // API: Contact Us submission (Rate-limited: 5 messages / 15 min per IP)
   if (p === '/api/contact' && m === 'POST') {
+    const ip = getClientIp(req);
+    if (isRateLimited(ip, 'contact', 5, 900000)) {
+      return send(res, 429, { error: 'Too many messages sent. Please wait a few minutes before trying again.' });
+    }
+
     const b = await body(req);
     const name = clean(b.name);
     const email = clean(b.email);
