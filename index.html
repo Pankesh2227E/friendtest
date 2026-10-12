@@ -1633,40 +1633,145 @@ main {
 <div id="toast" class="toast">Link copied! 📋</div>
 
 <script>
-// Native sound engine with custom audio effects
-const audioTracks = {
-  pop: new Audio('/static/assets/audio/pop.mp3'),
-  scorePop: new Audio('/static/assets/audio/scorePop.mp3'),
-  dunDun: new Audio('/static/assets/audio/dun-dun.mp3'),
-  whoosh: new Audio('/static/assets/audio/whoosh.mp3'),
-  swipe: new Audio('/static/assets/audio/swipe.mp3'),
-  walk: new Audio('/static/assets/audio/walk.mp3'),
-  huh: new Audio('/static/assets/audio/huh.mp3'),
-  umm: new Audio('/static/assets/audio/umm.mp3'),
-  aaapo: new Audio('/static/assets/audio/aaapo.mp3'),
-  bounce: new Audio('/static/assets/audio/bounce.mp3'),
-  resultHigh: new Audio('/static/assets/audio/result-high.mp3'),
-  resultMedium: new Audio('/static/assets/audio/result-medium.mp3'),
-  resultLow: new Audio('/static/assets/audio/result-low.mp3'),
-  complete: new Audio('/static/assets/audio/complete-bg.mp3')
+// Sound Engine powered by Web Audio API
+// Web Audio API sounds do NOT trigger iOS Media Session / Lock screen controls / Control Center
+const audioBuffers = {};
+let audioCtx = null;
+let activeSources = [];
+
+const soundUrls = {
+  pop: '/static/assets/audio/pop.mp3',
+  scorePop: '/static/assets/audio/scorePop.mp3',
+  dunDun: '/static/assets/audio/dun-dun.mp3',
+  whoosh: '/static/assets/audio/whoosh.mp3',
+  swipe: '/static/assets/audio/swipe.mp3',
+  walk: '/static/assets/audio/walk.mp3',
+  huh: '/static/assets/audio/huh.mp3',
+  umm: '/static/assets/audio/umm.mp3',
+  aaapo: '/static/assets/audio/aaapo.mp3',
+  bounce: '/static/assets/audio/bounce.mp3',
+  resultHigh: '/static/assets/audio/result-high.mp3',
+  resultMedium: '/static/assets/audio/result-medium.mp3',
+  resultLow: '/static/assets/audio/result-low.mp3',
+  complete: '/static/assets/audio/complete-bg.mp3'
 };
 
-// Preload audio
-Object.values(audioTracks).forEach(a => {
-  try { a.preload = 'auto'; } catch {}
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) {
+      audioCtx = new AudioContextClass();
+    }
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume().catch(() => {});
+  }
+  return audioCtx;
+}
+
+// Preload and decode all audio files into memory
+async function loadAudioBuffers() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  for (const [name, url] of Object.entries(soundUrls)) {
+    fetch(url)
+      .then(res => res.arrayBuffer())
+      .then(data => ctx.decodeAudioData(data))
+      .then(buffer => {
+        audioBuffers[name] = buffer;
+      })
+      .catch(() => {});
+  }
+}
+
+// Unlock audio on first user tap/click
+['click', 'touchstart', 'keydown'].forEach(evt => {
+  window.addEventListener(evt, () => {
+    getAudioContext();
+    if (Object.keys(audioBuffers).length === 0) {
+      loadAudioBuffers();
+    }
+  }, { once: true });
 });
 
 let soundEnabled = true;
-function playSound(name, opts = {}) {
-  if (!soundEnabled) return;
+
+function stopAllAudio() {
   try {
-    const a = audioTracks[name];
-    if (a) {
-      a.currentTime = 0;
-      if (opts.playbackRate) a.playbackRate = opts.playbackRate;
-      if (opts.volume !== undefined) a.volume = opts.volume;
-      a.play().catch(() => {});
+    // Stop all playing Web Audio nodes
+    activeSources.forEach(src => {
+      try { src.stop(0); src.disconnect(); } catch {}
+    });
+    activeSources = [];
+    // If AudioContext exists, suspend to release hardware audio session immediately
+    if (audioCtx && audioCtx.state === 'running') {
+      audioCtx.suspend().catch(() => {});
     }
+    // Clear mediaSession playback state if supported
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.playbackState = 'none';
+    }
+  } catch {}
+}
+
+// Pause and stop all audio immediately if the user switches tabs, minimizes browser, or locks screen
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    stopAllAudio();
+  } else if (soundEnabled && audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume().catch(() => {});
+  }
+});
+window.addEventListener('pagehide', stopAllAudio);
+window.addEventListener('blur', () => {
+  if (document.hidden) stopAllAudio();
+});
+
+function playSound(name, opts = {}) {
+  if (!soundEnabled || document.hidden) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const buffer = audioBuffers[name];
+    if (buffer) {
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+      if (opts.playbackRate) source.playbackRate.value = opts.playbackRate;
+      
+      const gainNode = ctx.createGain();
+      if (opts.volume !== undefined) {
+        gainNode.gain.value = Math.max(0, Math.min(1, opts.volume));
+      }
+      
+      source.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      
+      source.onended = () => {
+        activeSources = activeSources.filter(s => s !== source);
+      };
+      activeSources.push(source);
+      source.start(0);
+    } else {
+      // Lazy fetch and play if not pre-cached yet
+      fetch(soundUrls[name])
+        .then(res => res.arrayBuffer())
+        .then(data => ctx.decodeAudioData(data))
+        .then(decoded => {
+          audioBuffers[name] = decoded;
+          playSound(name, opts);
+        })
+        .catch(() => {});
+    }
+  } catch {}
+}
+
+// Clear media session metadata so iOS/Safari never shows a media widget on lock screen
+if ('mediaSession' in navigator) {
+  try {
+    navigator.mediaSession.metadata = null;
+    navigator.mediaSession.playbackState = 'none';
+    navigator.mediaSession.setActionHandler('play', () => stopAllAudio());
+    navigator.mediaSession.setActionHandler('pause', () => stopAllAudio());
   } catch {}
 }
 
@@ -1674,6 +1779,9 @@ const soundBtn = document.getElementById('soundToggle');
 const soundIcon = document.getElementById('soundIcon');
 soundBtn.onclick = () => {
   soundEnabled = !soundEnabled;
+  if (!soundEnabled) {
+    stopAllAudio();
+  }
   soundIcon.textContent = soundEnabled ? '🔊' : '🔇';
   soundBtn.style.opacity = soundEnabled ? '1' : '0.65';
 };
@@ -2982,6 +3090,7 @@ const routes = {
 };
 
 async function router() {
+  stopAllAudio();
   const hash = location.hash.slice(1) || '/';
   const parts = hash.split('/').filter(Boolean);
   const routeName = parts[0] || 'home';
