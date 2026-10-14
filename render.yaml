@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: realones
+    name: orbitbond
     runtime: node
     plan: free
     buildCommand: npm install

@@ -7,40 +7,36 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-VL3QS6N2ZH');
 </script>
 
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#8AC0EF">
 <meta name="robots" content="noindex, follow">
 
-<title>404 - Page Not Found | Fake Friend Test & Friendship Truth Detector</title>
-<meta name="description" content="Sorry, the page you are looking for on Don't Block Me - Fake Friend Test could not be found. Return to our homepage or create your personalized fake friend quiz.">
-<link rel="canonical" href="/404">
+<title>404 - Page Not Found | Fake Friend Tester</title>
+<meta name="description" content="Sorry, the page you are looking for on Fake Friend Tester could not be found. Return to our homepage or create your personalized friendship quiz.">
+<link rel="canonical" href="https://friendtest-lemv.onrender.com/404">
 
 <!-- OpenGraph / Facebook -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Don't Block Me">
-<meta property="og:title" content="404 Page Not Found – Fake Friend Test">
-<meta property="og:description" content="This page wandered off! Head back to the Fake Friend Test homepage to test your friends' loyalty.">
-<meta property="og:image" content="/static/assets/img/user/home/characters.webp">
-<meta property="og:url" content="/404">
+<meta property="og:site_name" content="Fake Friend Tester">
+<meta property="og:title" content="404 Page Not Found – Fake Friend Tester">
+<meta property="og:description" content="This page wandered off! Head back to the Fake Friend Tester homepage to test your friends' loyalty.">
+<meta property="og:image" content="https://friendtest-lemv.onrender.com/static/assets/img/og-home-1200x630.jpg">
+<meta property="og:url" content="https://friendtest-lemv.onrender.com/404">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="404 Page Not Found – Don't Block Me">
-<meta name="twitter:description" content="Oops, page not found! Jump back to the viral Fake Friend Test.">
-<meta name="twitter:image" content="/static/assets/img/user/home/characters.webp">
+<meta name="twitter:title" content="404 Page Not Found – Fake Friend Tester">
+<meta name="twitter:description" content="Oops, page not found! Jump back to Fake Friend Tester.">
+<meta name="twitter:image" content="https://friendtest-lemv.onrender.com/static/assets/img/og-home-1200x630.jpg">
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-<link rel="apple-touch-icon" href="/favicon-192.png">
-<link rel="alternate icon" href="/favicon.ico">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/static/assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800;900&family=Shantell+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
 
 <style>
@@ -54,281 +50,124 @@
   --yellow: #fde047;
   --font-main: 'Shantell Sans', 'Fredoka', ui-rounded, system-ui, sans-serif;
 }
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
 html, body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: var(--sky);
+  background: linear-gradient(180deg, #8AC0EF 0%, #bde0fe 100%);
   color: var(--ink);
   font-family: var(--font-main);
-  overflow-x: hidden;
 }
-body {
-  position: relative;
-  background: linear-gradient(180deg, #8AC0EF 0%, #bde0fe 100%);
-  min-height: 100vh;
-}
-.bg-cloud {
-  position: fixed;
-  pointer-events: none;
-  opacity: 0.55;
-  z-index: 0;
-  animation: floatCloud 14s ease-in-out infinite alternate;
-}
-.bg-cloud-1 { top: 4%; left: -20px; width: 140px; }
-.bg-cloud-2 { top: 22%; right: -30px; width: 160px; animation-duration: 18s; animation-delay: -4s; }
-.bg-cloud-3 { bottom: 12%; left: -10px; width: 130px; animation-duration: 16s; animation-delay: -8s; }
-@keyframes floatCloud {
-  0% { transform: translateY(0px) translateX(0px); }
-  50% { transform: translateY(-12px) translateX(10px); }
-  100% { transform: translateY(4px) translateX(-6px); }
-}
-
 header {
-  position: relative;
-  z-index: 20;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 580px;
-  margin: 0 auto;
-  padding: 12px 16px;
 }
 .header-logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   text-decoration: none;
-}
-.header-logo img {
-  height: 38px;
-  width: auto;
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: #0f172a;
 }
 .header-nav {
   display: flex;
-  align-items: center;
   gap: 8px;
 }
 .nav-link {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 6px 14px;
+  text-decoration: none;
+  padding: 6px 12px;
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 700;
   color: #0f172a;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  background: rgba(255, 255, 255, 0.7);
 }
-.nav-link:hover {
-  background: #ffffff;
-  transform: translateY(-1px);
-}
-
 main {
-  position: relative;
-  z-index: 10;
-  max-width: 580px;
-  margin: 0 auto;
-  padding: 0 16px 40px;
+  max-width: 680px;
+  margin: 20px auto 40px;
+  padding: 0 16px;
+  text-align: center;
 }
-
 .error-card {
   background: #ffffff;
   border-radius: 28px;
   padding: 36px 24px;
-  border: 3px solid #cbd5e1;
-  text-align: center;
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
-  margin-top: 14px;
-  margin-bottom: 24px;
+  border: 3px solid #e0f2fe;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 }
-
 .badge-404 {
   display: inline-block;
-  background: #fee2e2;
-  color: #b91c1c;
-  font-size: 0.85rem;
-  font-weight: 800;
-  padding: 5px 14px;
+  background: #fef08a;
+  color: #854d0e;
+  padding: 4px 14px;
   border-radius: 999px;
-  margin-bottom: 14px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
 }
-
 .error-code {
-  font-size: 4.5rem;
+  font-size: 4rem;
   font-weight: 900;
   line-height: 1;
-  margin: 0 0 10px 0;
-  color: #0f172a;
-  letter-spacing: -2px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
+  color: #0284c7;
+  margin-bottom: 8px;
 }
-.error-code span.dot {
-  color: #f43f5e;
-}
-
-.character-peek {
-  width: 140px;
-  height: auto;
-  margin: 6px auto 16px auto;
-  display: block;
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.12));
-}
-
 h1 {
   font-size: 1.6rem;
   font-weight: 900;
-  line-height: 1.3;
   color: #0f172a;
-  margin: 0 0 12px 0;
+  margin: 12px 0;
 }
-
 p {
-  font-size: 0.95rem;
-  line-height: 1.65;
   color: #475569;
-  margin: 0 0 18px 0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-bottom: 24px;
 }
-
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 22px;
-}
-
 .btn-primary {
   display: inline-block;
   background: #0284c7;
   color: #ffffff;
-  padding: 13px 20px;
-  border-radius: 999px;
-  font-size: 1rem;
-  font-weight: 800;
   text-decoration: none;
-  border: 2px solid #0369a1;
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
-  transition: all 0.2s ease;
+  font-weight: 800;
+  padding: 12px 24px;
+  border-radius: 999px;
+  margin: 6px;
+  box-shadow: 0 4px 0 #0369a1;
 }
-.btn-primary:hover {
-  background: #0369a1;
-  transform: translateY(-2px);
-}
-
 .btn-secondary {
   display: inline-block;
   background: #f1f5f9;
   color: #0f172a;
-  padding: 12px 18px;
+  text-decoration: none;
+  font-weight: 800;
+  padding: 12px 24px;
   border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 800;
-  text-decoration: none;
-  border: 2px solid #cbd5e1;
-  transition: all 0.2s ease;
+  margin: 6px;
+  border: 1.5px solid #cbd5e1;
 }
-.btn-secondary:hover {
-  background: #e2e8f0;
-  transform: translateY(-1px);
-}
-
-.quick-links-box {
-  background: #f8fafc;
-  border-radius: 18px;
-  padding: 16px;
-  margin-top: 24px;
-  border: 1.5px dashed #cbd5e1;
-  text-align: left;
-}
-.quick-links-box h2 {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: #334155;
-  margin: 0 0 8px 0;
-}
-.quick-links-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-.quick-link-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 10px;
-  background: #ffffff;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  text-decoration: none;
-  color: #1e293b;
-  font-size: 0.85rem;
-  font-weight: 700;
-  transition: background 0.15s;
-}
-.quick-link-item:hover {
-  background: #f0fdf4;
-  border-color: #86efac;
-}
-
-/* MPA Footer */
-.site-footer {
-  margin-top: 20px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 24px;
-  padding: 24px 18px;
-  border: 2px solid #cbd5e1;
+footer {
   text-align: center;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  padding: 30px 16px 40px;
+  font-size: 0.85rem;
+  color: #475569;
 }
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px 18px;
-  margin: 12px 0 16px;
-}
-.footer-links a {
+footer a {
   color: #0284c7;
   text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 700;
-  transition: color 0.15s;
-}
-.footer-links a:hover {
-  color: #0369a1;
-  text-decoration: underline;
-}
-.footer-copy {
-  font-size: 0.78rem;
-  color: #64748b;
-  line-height: 1.5;
-  border-top: 1px solid #e2e8f0;
-  padding-top: 12px;
+  margin: 0 8px;
 }
 </style>
 </head>
 <body>
 
-<div class="bg-cloud bg-cloud-1">
-  <svg viewBox="0 0 24 24" fill="white"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
-</div>
-<div class="bg-cloud bg-cloud-2">
-  <svg viewBox="0 0 24 24" fill="white"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
-</div>
-<div class="bg-cloud bg-cloud-3">
-  <svg viewBox="0 0 24 24" fill="white"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
-</div>
-
 <header>
-  <a class="header-logo" href="/" title="Don't Block Me Home">
-    <img src="/static/assets/img/logo-f.webp" alt="Don't Block Me Logo">
+  <a class="header-logo" href="/">
+    <span>🧸 Fake Friend Tester</span>
   </a>
   <div class="header-nav">
     <a href="/" class="nav-link">🏠 Home</a>
@@ -339,50 +178,40 @@ p {
 
 <main>
   <div class="error-card">
-    <div class="badge-404">Error 404 • Lost in the Clouds</div>
-    
-    <div class="error-code">4<span class="dot">0</span>4</div>
-
-    <img src="/static/assets/img/user/home/characters.webp" alt="Confused friendship characters" class="character-peek">
+    <div class="badge-404">Error 404 • Page Not Found</div>
+    <div class="error-code">404</div>
 
     <h1>Even Our Friendship Radar Can't Find This Page! 🕵️‍♂️</h1>
-    
     <p>
-      The link you clicked might be expired, mistyped, or never existed in our friendship circle. 
-      Don't worry—real friendships never get lost! Choose one of the helpful links below to get right back on track:
+      The link you clicked might be expired, mistyped, or removed from our circle. Real friendships never get lost—choose an option below to get back on track:
     </p>
 
-    <div class="action-buttons">
-      <a href="/#/create-name" class="btn-primary">✨ Create Your Fake Friend Test Quiz</a>
+    <div>
+      <a href="/create" class="btn-primary">✨ Make Your Own Fake Friend Test</a>
       <a href="/" class="btn-secondary">🏠 Back to Homepage</a>
     </div>
 
-    <div class="quick-links-box">
-      <h2>🔍 Helpful Resources:</h2>
-      <div class="quick-links-grid">
-        <a href="/about-us" class="quick-link-item">📖 About Us</a>
-        <a href="/contact-us" class="quick-link-item">💬 Contact Us</a>
-        <a href="/privacy-policy" class="quick-link-item">🔒 Privacy Policy</a>
-        <a href="/terms-and-conditions" class="quick-link-item">📋 Terms & Conditions</a>
-      </div>
+    <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 18px;">
+      <b>Explore Guides & Tools:</b><br><br>
+      <a href="/how-well-do-your-friends-know-you-quiz" style="color:#0284c7; font-weight:700; margin:0 8px;">How Well Do You Know Me</a> •
+      <a href="/friendship-quiz-questions" style="color:#0284c7; font-weight:700; margin:0 8px;">50 Questions Bank</a> •
+      <a href="/signs-of-a-fake-friend" style="color:#0284c7; font-weight:700; margin:0 8px;">Signs of a Fake Friend</a>
     </div>
   </div>
 
-  <!-- MPA Footer -->
-  <footer class="site-footer">
-    <div style="font-weight: 800; font-size: 1.1rem; color: #0f172a;">Don't Block Me 🧸</div>
-    <p style="font-size: 0.85rem; color: #475569; margin: 6px 0 10px;">The Viral Fake Friend Test & Friendship Truth Detector</p>
-    <div class="footer-links">
-      <a href="/">Home</a>
-      <a href="/about-us">About Us</a>
-      <a href="/privacy-policy">Privacy Policy</a>
-      <a href="/terms-and-conditions">Terms & Conditions</a>
+  <footer>
+    <p>© 2026 Fake Friend Tester. All rights reserved.</p>
+    <p>
+      <a href="/">Home</a> •
+      <a href="/how-well-do-your-friends-know-you-quiz">Quiz Guide</a> •
+      <a href="/friendship-quiz-questions">Questions</a> •
+      <a href="/signs-of-a-fake-friend">Signs of a Fake Friend</a> •
+      <a href="/fake-friend-quotes">Quotes</a> •
+      <a href="/about-us">About Us</a> •
+      <a href="/privacy-policy">Privacy Policy</a> •
+      <a href="/terms-and-conditions">Terms & Conditions</a> •
       <a href="/contact-us">Contact Us</a>
-    </div>
-    <div class="footer-copy">
-      © 2026 Don't Block Me. All rights reserved.<br>
-      Built for fun, laughter, and authentic friendship bonds.
-    </div>
+    </p>
   </footer>
 </main>
 

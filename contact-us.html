@@ -7,57 +7,77 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-VL3QS6N2ZH');
 </script>
 
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#8AC0EF">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large">
 
-<title>Contact Us – Support & Inquiries | Don't Block Me</title>
-<meta name="description" content="Have questions, suggestions, or need assistance with your Fake Friend Test? Contact the Don't Block Me team via our contact form or official email.">
-<meta name="keywords" content="contact us, fake friend test support, dont block me contact, feedback, report issue">
-<link rel="canonical" href="/contact-us">
+<title>Contact Us – Support & Quiz Deletion | Fake Friend Tester</title>
+<meta name="description" content="Have questions, suggestions, or need your quiz deleted? Contact the Fake Friend Tester team directly via our form or official email.">
+<link rel="canonical" href="https://friendtest-lemv.onrender.com/contact-us">
 
 <!-- OpenGraph / Facebook -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Don't Block Me">
-<meta property="og:title" content="Contact Us – Don't Block Me">
-<meta property="og:description" content="Send us feedback, report a quiz issue, or ask questions about the Fake Friend Test.">
-<meta property="og:image" content="/static/assets/img/user/home/characters.webp">
-<meta property="og:url" content="/contact-us">
+<meta property="og:site_name" content="Fake Friend Tester">
+<meta property="og:title" content="Contact Us – Support & Quiz Deletion | Fake Friend Tester">
+<meta property="og:description" content="Send us feedback, request quiz deletion, or ask questions about the Fake Friend Tester.">
+<meta property="og:image" content="https://friendtest-lemv.onrender.com/static/assets/img/og-home-1200x630.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Contact Fake Friend Tester">
+<meta property="og:url" content="https://friendtest-lemv.onrender.com/contact-us">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Contact Us – Don't Block Me">
-<meta name="twitter:description" content="Reach out to the Don't Block Me team anytime. We are happy to help!">
-<meta name="twitter:image" content="/static/assets/img/user/home/characters.webp">
+<meta name="twitter:title" content="Contact Us – Fake Friend Tester">
+<meta name="twitter:description" content="Reach out to the Fake Friend Tester team anytime. We are happy to help!">
+<meta name="twitter:image" content="https://friendtest-lemv.onrender.com/static/assets/img/og-home-1200x630.jpg">
 
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ContactPage",
-  "name": "Contact Don't Block Me",
-  "description": "Customer support and inquiry contact page for Don't Block Me and the Fake Friend Test.",
-  "url": "/contact-us",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Don't Block Me",
-    "url": "/"
-  }
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://friendtest-lemv.onrender.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Contact Us",
+          "item": "https://friendtest-lemv.onrender.com/contact-us"
+        }
+      ]
+    },
+    {
+      "@type": "ContactPage",
+      "name": "Contact Fake Friend Tester",
+      "description": "Customer support and quiz deletion request contact page for Fake Friend Tester.",
+      "url": "https://friendtest-lemv.onrender.com/contact-us",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fake Friend Tester",
+        "url": "https://friendtest-lemv.onrender.com/",
+        "logo": "https://friendtest-lemv.onrender.com/static/assets/img/logo-512.png"
+      }
+    }
+  ]
 }
 </script>
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-<link rel="apple-touch-icon" href="/favicon-192.png">
-<link rel="alternate icon" href="/favicon.ico">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/static/assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800;900&family=Shantell+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
 
 <style>
@@ -71,7 +91,7 @@
   --yellow: #fde047;
   --font-main: 'Shantell Sans', 'Fredoka', ui-rounded, system-ui, sans-serif;
 }
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+* { box-sizing: border-box; }
 html, body {
   margin: 0;
   padding: 0;
@@ -79,196 +99,134 @@ html, body {
   background-color: var(--sky);
   color: var(--ink);
   font-family: var(--font-main);
-  overflow-x: hidden;
 }
 body {
-  position: relative;
   background: linear-gradient(180deg, #8AC0EF 0%, #bde0fe 100%);
-  min-height: 100vh;
 }
-.bg-cloud {
-  position: fixed;
-  pointer-events: none;
-  opacity: 0.55;
-  z-index: 0;
-  animation: floatCloud 14s ease-in-out infinite alternate;
-}
-.bg-cloud-1 { top: 4%; left: -20px; width: 140px; }
-.bg-cloud-2 { top: 22%; right: -30px; width: 160px; animation-duration: 18s; animation-delay: -4s; }
-.bg-cloud-3 { bottom: 12%; left: -10px; width: 130px; animation-duration: 16s; animation-delay: -8s; }
-@keyframes floatCloud {
-  0% { transform: translateY(0px) translateX(0px); }
-  50% { transform: translateY(-12px) translateX(10px); }
-  100% { transform: translateY(4px) translateX(-6px); }
-}
-
 header {
-  position: relative;
-  z-index: 20;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 580px;
-  margin: 0 auto;
-  padding: 12px 16px;
 }
 .header-logo {
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: #0f172a;
   display: flex;
   align-items: center;
   gap: 8px;
-  text-decoration: none;
-}
-.header-logo img {
-  height: 38px;
-  width: auto;
 }
 .header-nav {
   display: flex;
-  align-items: center;
   gap: 8px;
 }
 .nav-link {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 6px 14px;
+  text-decoration: none;
+  padding: 6px 12px;
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 700;
   color: #0f172a;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-}
-.nav-link:hover {
-  background: #ffffff;
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.7);
 }
 .nav-link.active {
-  background: var(--yellow);
-  color: #0f172a;
+  background: #0284c7;
+  color: #ffffff;
 }
-
 main {
-  position: relative;
-  z-index: 10;
-  max-width: 580px;
-  margin: 0 auto;
-  padding: 0 16px 40px;
+  max-width: 760px;
+  margin: 10px auto 40px;
+  padding: 0 16px;
 }
-
 .content-card {
   background: #ffffff;
-  border-radius: 26px;
-  padding: 28px 22px;
-  border: 2.5px solid #cbd5e1;
-  text-align: left;
+  border-radius: 28px;
+  padding: 32px 24px;
+  border: 3px solid #e0f2fe;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-  margin-top: 10px;
-  margin-bottom: 24px;
 }
-
 .badge {
   display: inline-block;
-  background: #fce7f3;
-  color: #be185d;
-  font-size: 0.8rem;
-  font-weight: 800;
-  padding: 4px 12px;
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 4px 14px;
   border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.85rem;
   margin-bottom: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
-
 h1 {
-  font-size: 1.85rem;
+  font-size: 2rem;
   font-weight: 900;
   line-height: 1.25;
+  margin: 4px 0 12px;
   color: #0f172a;
-  margin: 0 0 12px 0;
 }
-
 p {
-  font-size: 0.95rem;
-  line-height: 1.65;
+  line-height: 1.7;
+  font-size: 1rem;
   color: #334155;
-  margin: 0 0 16px 0;
-}
-
-.form-group {
   margin-bottom: 16px;
 }
-.form-label {
+.form-group {
+  margin-bottom: 18px;
+}
+label {
   display: block;
-  font-size: 0.9rem;
   font-weight: 800;
+  font-size: 0.95rem;
   color: #0f172a;
   margin-bottom: 6px;
 }
-.form-input, .form-select, .form-textarea {
+input, select, textarea {
   width: 100%;
-  padding: 12px 14px;
+  padding: 12px 16px;
   border: 2px solid #cbd5e1;
   border-radius: 14px;
-  font-family: var(--font-main);
+  font-family: inherit;
   font-size: 0.95rem;
-  color: #0f172a;
-  background: #f8fafc;
   outline: none;
-  transition: all 0.2s ease;
+  background: #f8fafc;
 }
-.form-input:focus, .form-select:focus, .form-textarea:focus {
+input:focus, select:focus, textarea:focus {
   border-color: #0284c7;
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
 }
-.form-textarea {
-  resize: vertical;
-  min-height: 110px;
-}
-
 .btn-submit {
   width: 100%;
   background: #0284c7;
   color: #ffffff;
-  padding: 14px;
   border: none;
   border-radius: 999px;
-  font-family: var(--font-main);
-  font-size: 1.05rem;
-  font-weight: 800;
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: 900;
   cursor: pointer;
-  box-shadow: 0 6px 0 #0369a1;
-  transition: all 0.15s ease;
-  margin-top: 8px;
+  box-shadow: 0 4px 0 #0369a1;
 }
 .btn-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 0 #0369a1;
-}
-.btn-submit:active {
-  transform: translateY(4px);
-  box-shadow: 0 2px 0 #0369a1;
-}
-
-.info-cards {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-top: 24px;
+  background: #0369a1;
 }
 .info-box {
   background: #f8fafc;
   border: 2px solid #e2e8f0;
   border-radius: 16px;
-  padding: 14px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
 }
 .info-box b {
   display: block;
-  font-size: 0.95rem;
-  color: #0f172a;
+  color: #0284c7;
   margin-bottom: 4px;
 }
-
+.info-box span {
+  font-size: 0.9rem;
+  color: #475569;
+}
 .toast {
   position: fixed;
   bottom: 24px;
@@ -278,58 +236,33 @@ p {
   color: #ffffff;
   padding: 12px 24px;
   border-radius: 999px;
-  font-weight: 700;
-  font-size: 0.9rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
   z-index: 100;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 .toast.show {
   transform: translateX(-50%) translateY(0);
 }
-
-/* Site Footer */
-.site-footer {
-  margin-top: 30px;
-  background: rgba(255, 255, 255, 0.92);
-  border-radius: 24px;
-  padding: 24px 18px;
-  border: 2px solid #cbd5e1;
+footer {
   text-align: center;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  padding: 30px 16px 40px;
+  font-size: 0.85rem;
+  color: #475569;
 }
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px 18px;
-  margin: 14px 0;
-}
-.footer-links a {
+footer a {
   color: #0284c7;
-  font-weight: 700;
-  font-size: 0.9rem;
   text-decoration: none;
-}
-.footer-links a:hover {
-  text-decoration: underline;
-}
-.footer-copy {
-  font-size: 0.8rem;
-  color: #64748b;
-  margin-top: 12px;
+  margin: 0 8px;
 }
 </style>
 </head>
 <body>
 
-<img class="bg-cloud bg-cloud-1" src="/static/assets/img/user/home/clouds.webp" alt="">
-<img class="bg-cloud bg-cloud-2" src="/static/assets/img/user/home/clouds.webp" alt="">
-<img class="bg-cloud bg-cloud-3" src="/static/assets/img/user/home/clouds.webp" alt="">
-
 <header>
   <a class="header-logo" href="/">
-    <img src="/static/assets/img/logo-f.webp" alt="Don't Block Me">
+    <span>🧸 Fake Friend Tester</span>
   </a>
   <nav class="header-nav">
     <a class="nav-link" href="/">🏠 Home</a>
@@ -340,73 +273,71 @@ p {
 
 <main>
   <article class="content-card">
-    <div class="badge">📬 Get in Touch</div>
-    <h1>Contact Us</h1>
+    <div class="badge">💬 We're Here to Help</div>
+    <h1>Contact Us – Support & Inquiries</h1>
     <p>
-      Have a question about your quiz, want to suggest hilarious new questions, or need help deleting a scoreboard? We'd love to hear from you! Fill out the form below and our team will get back to you promptly.
+      Have feedback, spotted a bug, or want your quiz removed? We are here to help! Fill out the form below or email us directly at <a href="mailto:support@dontblockme.site" style="color: #0284c7; font-weight: 700;">support@dontblockme.site</a>.
     </p>
 
-    <form id="contactForm">
+    <form id="contactForm" style="margin-top: 20px;">
       <div class="form-group">
-        <label class="form-label" for="contactName">Your Name / Nickname</label>
-        <input class="form-input" type="text" id="contactName" required placeholder="e.g. Alex" maxlength="60">
+        <label for="contactName">Your Name *</label>
+        <input type="text" id="contactName" placeholder="e.g. Alex" required>
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="contactEmail">Your Email Address</label>
-        <input class="form-input" type="email" id="contactEmail" required placeholder="e.g. alex@example.com" maxlength="100">
+        <label for="contactEmail">Email Address *</label>
+        <input type="email" id="contactEmail" placeholder="e.g. alex@example.com" required>
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="contactSubject">Topic / Subject</label>
-        <select class="form-select" id="contactSubject">
-          <option value="General Question">General Question</option>
-          <option value="Suggest Quiz Question">Suggest a New Quiz Question 💡</option>
-          <option value="Report an Issue or Bug">Report an Issue / Bug 🐞</option>
-          <option value="Quiz Deletion Request">Request Quiz or Score Deletion 🗑️</option>
-          <option value="Feedback or Compliment">Feedback & Compliments 💕</option>
+        <label for="contactSubject">Subject *</label>
+        <select id="contactSubject" required>
+          <option value="General Inquiry">General Question / Inquiry</option>
+          <option value="Quiz Deletion Request">Quiz Deletion Request (Include Quiz ID/URL)</option>
+          <option value="Bug Report">Bug or Technical Issue</option>
+          <option value="Partnership / Feature Suggestion">Feedback / Feature Idea</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="contactMessage">Your Message</label>
-        <textarea class="form-textarea" id="contactMessage" required placeholder="Write your message here... Include your Quiz link if requesting assistance." maxlength="2000"></textarea>
+        <label for="contactMessage">Message *</label>
+        <textarea id="contactMessage" rows="5" placeholder="Write your message here... If requesting quiz deletion, please include your quiz link or ID." required></textarea>
       </div>
 
-      <button type="submit" class="btn-submit" id="submitBtn">Send Message 🚀</button>
+      <button type="submit" id="submitBtn" class="btn-submit">Send Message 🚀</button>
     </form>
 
-    <div class="info-cards">
+    <div style="margin-top: 32px;">
+      <h2>Need Immediate Assistance?</h2>
       <div class="info-box">
         <b>📧 Official Email Support</b>
-        <span>You can also contact our team directly at <a href="mailto:support@dontblockme.site" style="color: #0284c7; font-weight: 700;">support@dontblockme.site</a>.</span>
+        <span>Email us directly at <a href="mailto:support@dontblockme.site" style="color: #0284c7; font-weight: 700;">support@dontblockme.site</a>.</span>
       </div>
       <div class="info-box">
         <b>⏱️ Average Response Time</b>
         <span>We review all incoming inquiries and respond within 24–48 business hours.</span>
       </div>
       <div class="info-box">
-        <b>💡 Quick Help Tip</b>
-        <span>If you are requesting a quiz deletion, remember to include the 6-character quiz ID or the full URL link in your message so we can locate it immediately!</span>
+        <b>🗑️ Instant Quiz Deletion Route</b>
+        <span>To delete a quiz you created, select "Quiz Deletion Request" above and paste your quiz link or creator key. Our automated database handler safely purges the record.</span>
       </div>
     </div>
   </article>
 
-  <!-- MPA Footer -->
-  <footer class="site-footer">
-    <div style="font-weight: 800; font-size: 1.1rem; color: #0f172a;">Don't Block Me 🧸</div>
-    <p style="font-size: 0.85rem; color: #475569; margin: 6px 0 10px;">The Viral Fake Friend Test & Friendship Truth Detector</p>
-    <div class="footer-links">
-      <a href="/">Home</a>
-      <a href="/about-us">About Us</a>
-      <a href="/privacy-policy">Privacy Policy</a>
-      <a href="/terms-and-conditions">Terms & Conditions</a>
-      <a href="/contact-us">Contact Us</a>
-    </div>
-    <div class="footer-copy">
-      © 2026 Don't Block Me. All rights reserved.<br>
-      Built for fun, laughter, and authentic friendship bonds.
-    </div>
+  <footer>
+    <p>© 2026 Fake Friend Tester. All rights reserved.</p>
+    <p>
+      <a href="/">Home</a> •
+      <a href="/how-well-do-your-friends-know-you-quiz">How Well Do You Know Me</a> •
+      <a href="/friendship-quiz-questions">Questions Bank</a> •
+      <a href="/signs-of-a-fake-friend">Signs of a Fake Friend</a> •
+      <a href="/fake-friend-quotes">Quotes</a> •
+      <a href="/about-us">About Us</a> •
+      <a href="/privacy-policy">Privacy</a> •
+      <a href="/terms-and-conditions">Terms</a> •
+      <a href="/contact-us">Contact</a>
+    </p>
   </footer>
 </main>
 

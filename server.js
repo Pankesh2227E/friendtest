@@ -452,7 +452,35 @@ const handle = async (req, res) => {
     return send(res, 200, { success: true, message: 'Your message has been received! We will be in touch shortly.' });
   }
 
-  // SEO & Multi-Page Application (MPA) Routes
+  // SEO & Multi-Page Application (MPA) Guide & Trust Routes
+  if (p === '/how-well-do-your-friends-know-you-quiz' || p === '/how-well-do-your-friends-know-you-quiz.html') {
+    return fs.readFile(path.join(__dirname, 'how-well-do-your-friends-know-you-quiz.html'), (e, d) => {
+      res.writeHead(e ? 500 : 200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(e ? 'Server error' : d);
+    });
+  }
+
+  if (p === '/friendship-quiz-questions' || p === '/friendship-quiz-questions.html') {
+    return fs.readFile(path.join(__dirname, 'friendship-quiz-questions.html'), (e, d) => {
+      res.writeHead(e ? 500 : 200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(e ? 'Server error' : d);
+    });
+  }
+
+  if (p === '/signs-of-a-fake-friend' || p === '/signs-of-a-fake-friend.html') {
+    return fs.readFile(path.join(__dirname, 'signs-of-a-fake-friend.html'), (e, d) => {
+      res.writeHead(e ? 500 : 200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(e ? 'Server error' : d);
+    });
+  }
+
+  if (p === '/fake-friend-quotes' || p === '/fake-friend-quotes.html') {
+    return fs.readFile(path.join(__dirname, 'fake-friend-quotes.html'), (e, d) => {
+      res.writeHead(e ? 500 : 200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(e ? 'Server error' : d);
+    });
+  }
+
   if (p === '/about-us' || p === '/about-us.html' || p === '/about') {
     return fs.readFile(path.join(__dirname, 'about-us.html'), (e, d) => {
       res.writeHead(e ? 500 : 200, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -490,7 +518,7 @@ const handle = async (req, res) => {
       const host = (req.headers['x-forwarded-host'] || req.headers.host || '').split(':')[0];
       const proto = req.headers['x-forwarded-proto'] || 'https';
       if (host && !host.includes('localhost') && !host.includes('127.0.0.1')) {
-        content = content.replace(/https:\/\/ais-dev-hnj5fdszvpruhkimd7mw4e-160152659162\.asia-east1\.run\.app/g, `${proto}://${host}`);
+        content = content.replace(/https:\/\/friendtest-lemv\.onrender\.com/g, `${proto}://${host}`);
       }
       res.writeHead(200, { 'Content-Type': 'application/xml; charset=utf-8' });
       return res.end(content);
@@ -504,7 +532,7 @@ const handle = async (req, res) => {
       const host = (req.headers['x-forwarded-host'] || req.headers.host || '').split(':')[0];
       const proto = req.headers['x-forwarded-proto'] || 'https';
       if (host && !host.includes('localhost') && !host.includes('127.0.0.1')) {
-        content = content.replace(/https:\/\/ais-dev-hnj5fdszvpruhkimd7mw4e-160152659162\.asia-east1\.run\.app/g, `${proto}://${host}`);
+        content = content.replace(/https:\/\/friendtest-lemv\.onrender\.com/g, `${proto}://${host}`);
       }
       res.writeHead(200, { 'Content-Type': 'application/xml; charset=utf-8' });
       return res.end(content);
@@ -518,11 +546,81 @@ const handle = async (req, res) => {
       const host = (req.headers['x-forwarded-host'] || req.headers.host || '').split(':')[0];
       const proto = req.headers['x-forwarded-proto'] || 'https';
       if (host && !host.includes('localhost') && !host.includes('127.0.0.1')) {
-        content = content.replace(/https:\/\/ais-dev-hnj5fdszvpruhkimd7mw4e-160152659162\.asia-east1\.run\.app/g, `${proto}://${host}`);
+        content = content.replace(/https:\/\/friendtest-lemv\.onrender\.com/g, `${proto}://${host}`);
       }
       res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
       return res.end(content);
     }
+  }
+
+  // Section 5: Server-rendered OpenGraph tags for shared quiz URLs (/q/:id)
+  const sharedMatch = p.match(/^\/q\/([\w-]+)$/);
+  if (sharedMatch) {
+    const quizId = sharedMatch[1];
+    const q = await getQuiz(quizId);
+    return fs.readFile(path.join(__dirname, 'index.html'), 'utf8', (e, html) => {
+      if (e) {
+        res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+        return res.end('Server error');
+      }
+      const host = (req.headers['x-forwarded-host'] || req.headers.host || '').split(':')[0] || 'friendtest-lemv.onrender.com';
+      const proto = req.headers['x-forwarded-proto'] || 'https';
+      const origin = `${proto}://${host}`;
+      
+      const safeName = q ? clean(q.name).slice(0, 25) : 'Friend';
+      const shareTitle = `Can you pass ${safeName}'s fake friend test?`;
+      const shareDesc = `10 questions. Think you know ${safeName}? Prove it on the live leaderboard.`;
+      const shareUrl = `${origin}/q/${quizId}`;
+      const shareImg = `${origin}/static/assets/img/og-home-1200x630.jpg`;
+
+      // Replace meta tags dynamically for social bots (WhatsApp, Snapchat, Twitter, Facebook)
+      let customHtml = html
+        .replace(/<title>.*?<\/title>/i, `<title>${shareTitle} | Fake Friend Tester</title>`)
+        .replace(/<meta name="robots" content=".*?">/i, '<meta name="robots" content="noindex">')
+        .replace(/<meta property="og:title" content=".*?">/i, `<meta property="og:title" content="${shareTitle}">`)
+        .replace(/<meta property="og:description" content=".*?">/i, `<meta property="og:description" content="${shareDesc}">`)
+        .replace(/<meta property="og:url" content=".*?">/i, `<meta property="og:url" content="${shareUrl}">`)
+        .replace(/<meta name="twitter:title" content=".*?">/i, `<meta name="twitter:title" content="${shareTitle}">`)
+        .replace(/<meta name="twitter:description" content=".*?">/i, `<meta name="twitter:description" content="${shareDesc}">`);
+
+      res.writeHead(200, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'X-Robots-Tag': 'noindex'
+      });
+      res.end(customHtml);
+    });
+  }
+
+  // Real path for Create Quiz flow (/create, /create/...)
+  if (p === '/create' || p.startsWith('/create/')) {
+    return fs.readFile(path.join(__dirname, 'index.html'), 'utf8', (e, html) => {
+      if (e) {
+        res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+        return res.end('Server error');
+      }
+      const customHtml = html.replace(/<meta name="robots" content=".*?">/i, '<meta name="robots" content="noindex">');
+      res.writeHead(200, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'X-Robots-Tag': 'noindex'
+      });
+      res.end(customHtml);
+    });
+  }
+
+  // Real path for Creator Scoreboard (/board/:id)
+  if (p.startsWith('/board/')) {
+    return fs.readFile(path.join(__dirname, 'index.html'), 'utf8', (e, html) => {
+      if (e) {
+        res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+        return res.end('Server error');
+      }
+      const customHtml = html.replace(/<meta name="robots" content=".*?">/i, '<meta name="robots" content="noindex, nofollow">');
+      res.writeHead(200, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'X-Robots-Tag': 'noindex, nofollow'
+      });
+      res.end(customHtml);
+    });
   }
 
   // Explicit error page routes for testing and inspection
@@ -576,5 +674,5 @@ http.createServer((req, res) => handle(req, res).catch(err => {
     }
   }
 })).listen(PORT, '0.0.0.0', () => {
-  console.log('RealOnes / Don\'t Block Me server running on http://0.0.0.0:' + PORT);
+  console.log('Fake Friend Tester server running on http://0.0.0.0:' + PORT);
 });

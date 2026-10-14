@@ -1,15 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /api/
 
-# Google AdSense and AdsBot Crawlers
-User-agent: Mediapartners-Google
-Allow: /
-
-User-agent: AdsBot-Google
-Allow: /
-
-User-agent: AdsBot-Google-Mobile
-Allow: /
-
-Sitemap: https://ais-dev-hnj5fdszvpruhkimd7mw4e-160152659162.asia-east1.run.app/sitemap.xml
+Sitemap: https://friendtest-lemv.onrender.com/sitemap.xml

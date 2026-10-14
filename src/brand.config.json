@@ -1,0 +1,23 @@
+{
+  "name": "OrbitBond",
+  "tagline": "Find out who really knows you.",
+  "domain": "https://friendtest-lemv.onrender.com",
+  "contactEmail": "pankesh2008@gmail.com",
+  "social": {
+    "tiktok": "",
+    "instagram": ""
+  },
+  "colors": {
+    "ink": "#14121F",
+    "primary": "#5B3DF5",
+    "accent": "#FF6B57",
+    "highlight": "#FFD84D",
+    "surface": "#FFFFFF",
+    "soft": "#F4F1FF"
+  },
+  "fonts": {
+    "heading": "Plus Jakarta Sans",
+    "body": "Inter"
+  },
+  "ogImage": "/static/assets/img/og-home-1200x630.jpg"
+}

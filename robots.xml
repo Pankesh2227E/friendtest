@@ -1,27 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robots xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Crawler access policies for Don't Block Me / Fake Friend Test -->
-  <policy>
-    <user-agent>*</user-agent>
-    <allow>/</allow>
-    <disallow>/api/</disallow>
+  <!-- Crawler access policies for OrbitBond / Fake Friend Test -->
+  <policy user-agent="*">
+    <allow path="/" />
   </policy>
-  <policy>
-    <user-agent>Mediapartners-Google</user-agent>
-    <allow>/</allow>
-    <description>Full access granted for Google AdSense contextual crawlers</description>
-  </policy>
-  <policy>
-    <user-agent>AdsBot-Google</user-agent>
-    <allow>/</allow>
-    <description>Full access granted for Google Ads quality check desktop crawlers</description>
-  </policy>
-  <policy>
-    <user-agent>AdsBot-Google-Mobile</user-agent>
-    <allow>/</allow>
-    <description>Full access granted for Google Ads mobile landing page crawlers</description>
-  </policy>
-  <sitemaps>
-    <sitemap>https://ais-dev-hnj5fdszvpruhkimd7mw4e-160152659162.asia-east1.run.app/sitemap.xml</sitemap>
-  </sitemaps>
+  <sitemap location="https://friendtest-lemv.onrender.com/sitemap.xml" />
 </robots>

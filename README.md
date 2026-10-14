@@ -1,6 +1,6 @@
-# Fake Friend Test (RealOnes) – Don't Block Me
+# Fake Friend Tester (Fake Friend Test)
 
-An interactive, viral web application for creating custom friendship quizzes, exposing fake friends, and sharing scoreboards with friends. Built with high-performance vanilla JavaScript and a lightweight Node.js backend.
+An interactive, viral web application for creating custom friendship quizzes, discovering who your real friends are, and sharing live leaderboards. Built with high-performance vanilla JavaScript and a lightweight, dependency-free Node.js backend.
 
 ---
 
@@ -10,17 +10,21 @@ An interactive, viral web application for creating custom friendship quizzes, ex
 * **Instant Sharable Links**: Generates unique links for players and a protected secret access link for the quiz creator.
 * **Live Scoreboard & Reactions**: Real-time leaderboards showing who scored highest and who failed the friendship test.
 * **Web Audio Sound Effects**: Integrated, non-intrusive sound effects powered by the Web Audio API (does not trigger mobile lock-screen media session controls).
-* **Responsive Multi-Page Experience**:
-  * `/` – Main Quiz App & Leaderboard
-  * `/about-us` – Brand mission and story
+* **High-Ranking SEO Multi-Page Guides**:
+  * `/how-well-do-your-friends-know-you-quiz` – Step-by-step quiz creation and scoring guide
+  * `/friendship-quiz-questions` – 50 curated "How Well Do You Know Me?" questions bank
+  * `/signs-of-a-fake-friend` – 10 psychological signs of fake friends and how to set boundaries
+  * `/fake-friend-quotes` – Sourced quotes and copy-paste Instagram/TikTok story captions
+* **Trust & Legal Compliance**:
+  * `/about-us` – Brand mission and methodology
   * `/privacy-policy` – GDPR/CCPA compliant privacy statement
   * `/terms-and-conditions` – User agreements and acceptable use policy
   * `/contact-us` – Direct contact message submission
   * Custom `/404` and `/500` branded error pages
 * **SEO & Social Optimization**:
-  * OpenGraph and Twitter/X summary cards.
-  * Schema.org `WebApplication` and `FAQPage` JSON-LD structured data.
-  * Dynamic `sitemap.xml` and `robots.txt` compatible with Google Search Console.
+  * OpenGraph and Twitter/X summary cards (1200x630).
+  * Schema.org `WebApplication`, `BreadcrumbList`, and `FAQPage` JSON-LD structured data.
+  * Search Console verified `sitemap.xml` and `robots.txt` compatible with Googlebot.
 * **Dual Database Architecture**:
   * **MongoDB Atlas** for reliable production persistence across server redeploys and restarts.
   * **Local file fallback** (`data/db.json`) for seamless zero-setup offline/local development.
@@ -34,23 +38,28 @@ An interactive, viral web application for creating custom friendship quizzes, ex
 ## 📁 Project Architecture
 
 ```
-├── 404.html                   # Custom 404 error page
-├── 500.html                   # Custom 500 server error page
-├── about-us.html              # Standalone About Us page
-├── contact-us.html            # Contact submission page
-├── privacy-policy.html        # Privacy policy page
-├── terms-and-conditions.html  # Terms and conditions page
-├── index.html                 # Main single-page application & quiz engine
-├── server.js                  # Pure Node.js HTTP server & REST API
-├── questions_seed.json        # Curated questions database
-├── package.json               # Project manifest and scripts
-├── Dockerfile                 # Container specification
-├── render.yaml                # Infrastructure configuration for Render
-├── robots.txt                 # Search engine crawler policies
-├── sitemap.xml                # Search engine discovery index
-├── .env.example               # Environment variable templates
+├── 404.html                                  # Custom 404 error page
+├── 500.html                                  # Custom 500 server error page
+├── about-us.html                             # Standalone About Us page
+├── contact-us.html                           # Contact submission page
+├── privacy-policy.html                       # Privacy policy page
+├── terms-and-conditions.html                 # Terms and conditions page
+├── how-well-do-your-friends-know-you-quiz.html # SEO Guide: Quiz creation & scoring breakdown
+├── friendship-quiz-questions.html            # SEO Guide: 50 friendship questions bank
+├── signs-of-a-fake-friend.html               # SEO Guide: 10 signs of fake friends & advice
+├── fake-friend-quotes.html                   # SEO Guide: Sourced quotes & social captions
+├── index.html                                # Main single-page application & quiz engine
+├── server.js                                 # Pure Node.js HTTP server & REST API
+├── questions_seed.json                       # Curated questions database
+├── package.json                              # Project manifest and scripts
+├── Dockerfile                                # Container specification
+├── render.yaml                               # Infrastructure configuration for Render
+├── robots.txt                                # Search engine crawler policies
+├── sitemap.xml                               # Search engine discovery index
+├── .env.example                              # Environment variable templates
 └── static/
-    └── assets/audio/          # Lightweight sound effect assets
+    ├── assets/audio/                         # Lightweight sound effect assets
+    └── assets/img/                           # Brand icons, logo-512, and 1200x630 OG image
 ```
 
 ---
